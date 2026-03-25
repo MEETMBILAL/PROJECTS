@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComixHub | Manhwa Universe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='blue' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 6 4 14'/><path d='M12 6v14'/><path d='M8 8v12'/><path d='M4 4v16'/></svg>"
+        type="image/svg+xml">
+  
+  
+  <style>
+        :root {
+            --primary-color: #0a0a14;
+            --secondary-color: #1a1a2e;
+            --accent-color: #0f3460;
+            --highlight-color: #e94560;
+            --highlight-gradient: linear-gradient(135deg, #e94560 0%, #ff7e5f 100%);
+            --text-primary: #f1f1f1;
+            --text-secondary: #b8b8b8;
+            --card-bg: rgba(26, 26, 46, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: var(--primary-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--highlight-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff7e5f;
+        }
+
+        .bg-primary-color {
+            background: rgba(10, 10, 20, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(233, 69, 96, 0.1);
+        }
+
+        .hero-section {
+            background: radial-gradient(ellipse at top, rgba(26, 26, 46, 0.4) 0%, transparent 70%),
+                radial-gradient(ellipse at bottom, rgba(233, 69, 96, 0.1) 0%, transparent 70%);
+            padding: 4rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--highlight-color), transparent);
+        }
+
+        .main-title {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            background: var(--highlight-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: var(--highlight-gradient);
+            border-radius: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(233, 69, 96, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(233, 69, 96, 0);
+            }
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--highlight-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(233, 69, 96, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-value {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .filters-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .filters {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            color: var(--highlight-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label i {
+            font-size: 0.8rem;
+        }
+
+        select,
+        .search-box {
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        select:focus,
+        .search-box:focus {
+            outline: none;
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .search-box {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23e94560' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 15px center;
+            padding-left: 45px;
+            background-size: 20px;
+        }
+
+        .results-header {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .results-header h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            background: var(--highlight-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .results-header h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--highlight-gradient);
+            border-radius: 2px;
+        }
+
+        .results-count {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: var(--glass-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .manhwa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .manhwa-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardAppear 0.6s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .manhwa-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--highlight-gradient);
+            z-index: 2;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .manhwa-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(233, 69, 96, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .manhwa-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-image-container {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .manhwa-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .manhwa-card:hover .card-image-overlay {
+            transform: translateY(0);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--highlight-gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .manhwa-card:hover .card-badge {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: white;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+            display: block;
+            max-height: calc(1.3em * 2);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .manhwa-card:hover .card-title {
+            color: var(--highlight-color);
+        }
+
+        .card-author {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-author i {
+            color: var(--highlight-color);
+            font-size: 0.8rem;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: #95a5a6;
+            margin-bottom: 10px;
+            flex-grow: 1;
+            line-height: 1.4rem;
+            max-height: 4.2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .card-rating i {
+            color: #ffd700;
+        }
+
+        .card-chapters {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .manhwa-card:hover .card-chapters {
+            background: rgba(233, 69, 96, 0.2);
+            color: white;
+        }
+
+        .genre-tag {
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--highlight-color);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--highlight-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem;
+            grid-column: 1/-1;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            margin: 2rem auto;
+            max-width: 800px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--highlight-color);
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .pagination-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--highlight-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .page-btn:hover:not(.disabled):not(.active) {
+            border-color: rgba(233, 69, 96, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .page-btn.active {
+            background: var(--highlight-gradient);
+            border-color: transparent;
+            font-weight: bold;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .page-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        footer {
+            background: var(--primary-color);
+            margin-top: 5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .footer-section h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--highlight-gradient);
+            border-radius: 2px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--highlight-color);
+            transform: translateX(5px);
+        }
+
+        .footer-section a i {
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--highlight-color);
+            transform: translateY(-3px);
+        }
+
+        .manhwa-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 1rem;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                backdrop-filter: blur(0);
+            }
+
+            to {
+                opacity: 1;
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-item {
+                padding: 1rem;
+            }
+
+            .filters {
+                padding: 1.5rem;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .manhwa-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+                padding: 0.5rem;
+            }
+
+            .card-image-container {
+                height: 250px;
+            }
+
+            .results-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .results-header h2::before {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 4px;
+                top: auto;
+                bottom: -10px;
+            }
+
+            .pagination {
+                gap: 0.3rem;
+            }
+
+            .page-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .manhwa-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .manhwa-card:hover {
+                transform: none;
+            }
+
+            .manhwa-card:active {
+                transform: scale(0.98);
+            }
+
+            .page-btn:active:not(.disabled) {
+                transform: scale(0.95);
+            }
+        }
+
+        body {
+            animation: pageLoad 0.8s ease;
+        }
+
+        @keyframes pageLoad {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            justify-content: flex-end;
+        }
+
+        .view-btn {
+            background: var(--glass-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: var(--highlight-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        .quick-actions {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--highlight-gradient);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: actionBtnAppear 0.6s ease forwards;
+        }
+
+        .action-btn:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .action-btn:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes actionBtnAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bg-primary-color py-3 shadow-lg sticky top-0 z-1000">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.location.href='index.html'">
+                <div
+                    class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-[#e94560] to-[#ff7e5f] rounded-xl transition-transform duration-300 group-hover:rotate-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m16 6 4 14" />
+                        <path d="M12 6v14" />
+                        <path d="M8 8v12" />
+                        <path d="M4 4v16" />
+                    </svg>
+                </div>
+                <span
+                    class="text-white text-xl font-bold tracking-wider bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">ComixHub</span>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="index.html"
+                    class="text-gray-300 hover:text-white font-medium transition-colors duration-300 relative group">
+                    Home
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#e94560] to-[#ff7e5f] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="bookmark.html"
+                    class="text-gray-300 hover:text-white font-medium transition-colors duration-300 relative group">
+                    Bookmarks
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#e94560] to-[#ff7e5f] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="comic.html" class="text-white font-medium relative group">
+                    Comics
+                    <span
+                        class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#e94560] to-[#ff7e5f]"></span>
+                </a>
+                <a href="recruitment.html"
+                    class="text-gray-300 hover:text-white font-medium transition-colors duration-300 relative group">
+                    Recruitment
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#e94560] to-[#ff7e5f] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden md:block relative">
+                    <input type="text" id="headerSearch" placeholder="Search comics..." style="margin-left: 11px;"
+                        class="search-input  w-64 px-4 py-2 pl-12 rounded-xl border-2 border-gray-700 bg-gray-900 text-white focus:outline-none focus:border-[#e94560] transition-all duration-300">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+
+                <a href="login.html"
+                    class="bg-gradient-to-r from-[#e94560] to-[#ff7e5f] text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 flex items-center gap-2">
+                    <i class="fas fa-user"></i>
+                    <span class="hidden sm:inline">Login</span>
+                </a>
+
+                <button id="mobileMenuToggle" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="md:hidden hidden mt-4 px-4 pb-4">
+            <div class="bg-gray-900 rounded-2xl p-4 space-y-2">
+                <a href="index.html" class="block px-4 py-3 rounded-xl hover:bg-gray-800 transition-colors text-white">
+                    <i class="fas fa-home mr-3"></i>Home
+                </a>
+                <a href="bookmark.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-gray-800 transition-colors text-white">
+                    <i class="fas fa-bookmark mr-3"></i>Bookmarks
+                </a>
+                <a href="comic.html"
+                    class="block px-4 py-3 rounded-xl bg-gradient-to-r from-[#e94560]/20 to-[#ff7e5f]/20 border border-[#e94560]/30 text-white">
+                    <i class="fas fa-book-open mr-3"></i>Comics
+                </a>
+                <a href="recruitment.html"
+                    class="block px-4 py-3 rounded-xl hover:bg-gray-800 transition-colors text-white">
+                    <i class="fas fa-users mr-3"></i>Recruitment
+                </a>
+                <div class="pt-2">
+                    <input type="text" placeholder="Search comics..."
+                        class="search-input w-full px-4 py-2 pl-12 rounded-xl border-2 border-gray-700 bg-gray-800 text-white focus:outline-none focus:border-[#e94560]">
+                    <i class="fas fa-search absolute left-8 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="main-title">
+            <h1>Manhwa Collection Universe</h1>
+            <p class="tagline">Explore our curated collection of 80+ top-rated manhwa spanning Action, Murim, Revenge,
+                Fantasy, and more. Dive into epic stories brought to life with stunning visuals and captivating
+                narratives.</p>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value text-gradient"
+                        style="background: linear-gradient(135deg, #e94560, #ff7e5f); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        80+</div>
+                    <div class="stat-label">Manhwa Titles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-gradient"
+                        style="background: linear-gradient(135deg, #4d96ff, #6bc5ff); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        4.5+</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-gradient"
+                        style="background: linear-gradient(135deg, #6bc77e, #4cd964); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        10K+</div>
+                    <div class="stat-label">Total Chapters</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-gradient"
+                        style="background: linear-gradient(135deg, #ff9a3d, #ffcc00); -webkit-background-clip: text; background-clip: text; color: transparent;">
+                        24/7</div>
+                    <div class="stat-label">Updated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="filters-container">
+        <div class="filters">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-search"></i> Search</label>
+                    <input type="text" class="search-box" id="searchInput"
+                        placeholder="Title, author, or description...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-tags"></i> Genre</label>
+                    <select id="genreFilter">
+                        <option value="all">All Genres</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-circle"></i> Status</label>
+                    <select id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label"><i class="fas fa-sort"></i> Sort By</label>
+                    <select id="sortFilter">
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="chapters">Most Chapters</option>
+                        <option value="title">Title (A-Z)</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="view-toggle" id="viewToggle">
+                <button class="view-btn active" data-view="grid"><i class="fas fa-th-large"></i></button>
+                <button class="view-btn" data-view="list"><i class="fas fa-list"></i></button>
+                <button class="view-btn" data-view="compact"><i class="fas fa-th"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-header">
+        <h2>Top Manhwa Collection</h2>
+        <div class="results-count" id="resultsCount">Loading...</div>
+    </div>
+
+    <div class="manhwa-grid" id="manhwaGrid"></div>
+
+    <div class="loading hidden" id="loadingIndicator">
+        <i class="fas fa-spinner"></i>
+        <p>Loading manhwa collection...</p>
+    </div>
+
+    <div class="no-results hidden" id="noResults">
+        <i class="fas fa-search"></i>
+        <h3 class="text-2xl mb-4">No manhwa found</h3>
+        <p>Try adjusting your search or filters</p>
+        <button
+            class="mt-4 px-6 py-2 bg-gradient-to-r from-[#e94560] to-[#ff7e5f] text-white rounded-xl font-medium hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300"
+            onclick="manhwaApp.resetFilters()">
+            Reset Filters
+        </button>
+    </div>
+
+    <div class="pagination-container">
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <div class="quick-actions">
+        <button class="action-btn" onclick="manhwaApp.scrollToTop()" title="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="action-btn" onclick="manhwaApp.randomManhwa()" title="Random pick">
+            <i class="fas fa-random"></i>
+        </button>
+        <button class="action-btn" onclick="manhwaApp.toggleDarkMode()" title="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div
+                            class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-[#e94560] to-[#ff7e5f] rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m16 6 4 14" />
+                                <path d="M12 6v14" />
+                                <path d="M8 8v12" />
+                                <path d="M4 4v16" />
+                            </svg>
+                        </div>
+                        <span class="text-white text-xl font-bold">ComixHub</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Your ultimate hub for manhwa, manga, and comics. Discover trending series, curated picks, and
+                        immersive storytelling — all in one place.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
+                        <li><a href="#"><i class="fas fa-newspaper"></i> New Releases</a></li>
+                        <li><a href="#"><i class="fas fa-star"></i> Top Rated</a></li>
+                        <li><a href="#"><i class="fas fa-layer-group"></i> Genres</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-comments"></i> Reader Reviews</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> Discussion Boards</a></li>
+                        <li><a href="#"><i class="fas fa-handshake"></i> Recommendations</a></li>
+                        <li><a href="#"><i class="fas fa-user-tie"></i> Creator Spotlights</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Content Guidelines</a></li>
+                        <li><a href="#"><i class="fas fa-balance-scale"></i> DMCA</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 ComixHub. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const manhwaData = [
+            { id: 1, title: "Solo Leveling", author: "Chugong", genre: "action", status: "completed", rating: 4.9, chapters: 179, desc: "Weakest hunter gains a system to level up alone.", image: "https://i.pinimg.com/736x/dd/e5/c4/dde5c47210a23bc5f6bbc6b3f8bcb0ea.jpg", featured: true },
+            { id: 2, title: "Omniscient Reader's Viewpoint", author: "Sing-Shong", genre: "action", status: "ongoing", rating: 4.9, chapters: 195, desc: "Only reader survives when a webnovel becomes reality.", image: "https://i.pinimg.com/736x/ea/c5/8f/eac58f198545ffdb6f002647f971ba78.jpg", featured: true },
+            { id: 3, title: "The Beginning After The End", author: "TurtleMe", genre: "fantasy", status: "ongoing", rating: 4.8, chapters: 185, desc: "King reborn in magic world with memories.", image: "https://i.pinimg.com/736x/dd/53/b2/dd53b29c52e9165c7f5ad87dbcb2351c.jpg", featured: true },
+            { id: 4, title: "The Legend of the Northern Blade", author: "Woo-Gak", genre: "murim", status: "ongoing", rating: 4.9, chapters: 180, desc: "Last survivor seeks vengeance in murim world.", image: "https://i.pinimg.com/1200x/68/5f/69/685f69ed5555a3aa258e27a86781313c.jpg", featured: true },
+            { id: 5, title: "Return of the Mount Hua Sect", author: "Bigeum", genre: "murim", status: "ongoing", rating: 4.8, chapters: 150, desc: "Disciple returns to revive fallen sect.", image: "https://i.pinimg.com/736x/c9/be/cd/c9becdefa4a2794e365ad738eac96494.jpg", featured: true },
+            { id: 6, title: "Nano Machine", author: "Han So-Ryong", genre: "murim", status: "ongoing", rating: 4.8, chapters: 170, desc: "Gets nano-tech to dominate martial world.", image: "https://i.pinimg.com/736x/e5/48/75/e548756b9a721c3b26c0a75b96ff1599.jpg", featured: true },
+            { id: 7, title: "Chronicles of Heavenly Demon", author: "Jin Ho", genre: "murim", status: "ongoing", rating: 4.7, chapters: 190, desc: "Slave becomes martial artist for revenge.", image: "https://i.pinimg.com/736x/0a/e3/63/0ae3631dda08c21d4d77f5109ccfbcc9.jpg", featured: true },
+            { id: 8, title: "SSS-Class Suicide Hunter", author: "Lee", genre: "action", status: "ongoing", rating: 4.7, chapters: 130, desc: "Copies skills by risking death.", image: "https://i.pinimg.com/736x/54/3e/ad/543eadb8ecf3de1a65a936ab63d574bf.jpg", featured: true },
+            { id: 9, title: "Reincarnation of the Suicidal Battle God", author: "Lee", genre: "fantasy", status: "ongoing", rating: 4.6, chapters: 105, desc: "Battle god reincarnates for revenge.", image: "https://i.pinimg.com/736x/a4/31/39/a43139837c6f38b3bfd7cbebd6100a23.jpg", featured: true },
+            { id: 10, title: "Latna Saga: Survival of a Sword King", author: "Hwang", genre: "fantasy", status: "ongoing", rating: 4.6, chapters: 150, desc: "Sword king survives in new world.", image: "https://i.pinimg.com/736x/87/fd/c5/87fdc5aad544643c5276faf7221cd9fe.jpg", featured: true },
+            { id: 11, title: "Solo Max-Level Newbie", author: "Kim Eun-kyung", genre: "action", status: "ongoing", rating: 4.5, chapters: 120, desc: "Returns with max-level knowledge.", image: "https://i.pinimg.com/736x/d6/09/0f/d6090f9e7dd8625af8a06f187988ad24.jpg", featured: true },
+            { id: 12, title: "Murim Login", author: "Kang Hyun-woo", genre: "murim", status: "ongoing", rating: 4.7, chapters: 210, desc: "Enters murim world via game login.", image: "https://i.pinimg.com/1200x/45/77/93/457793ba610fbe69cec8943b7eb803c8.jpg", featured: true },
+            { id: 13, title: "Second Life Ranker", author: "Nong Nong", genre: "action", status: "ongoing", rating: 4.6, chapters: 190, desc: "Climbs tower for revenge.", image: "https://i.pinimg.com/736x/78/e7/a8/78e7a8455442cb7fc3ff19eba7cb88b3.jpg", featured: true },
+            { id: 14, title: "The Great Mage Returns After 4000 Years", author: "Barnacle", genre: "magic", status: "ongoing", rating: 4.6, chapters: 180, desc: "Greatest mage returns to save humanity.", image: "https://i.pinimg.com/736x/98/ea/a0/98eaa0b17299c58001544563d74387e5.jpg", featured: true },
+            { id: 15, title: "A Returner's Magic Should Be Special", author: "Uson", genre: "magic", status: "ongoing", rating: 4.6, chapters: 180, desc: "Mage returns to save world.", image: "https://i.pinimg.com/736x/3f/e8/61/3fe861c00c5adb5bd94b4c6f23f8d9dc.jpg", featured: true },
+            { id: 17, title: "Kill The Hero", author: "Lee", genre: "revenge", status: "ongoing", rating: 4.5, chapters: 130, desc: "Returns to kill betrayers.", image: "https://i.pinimg.com/1200x/d4/c0/64/d4c064f058adaa119e815a3b3202aeb5.jpg", featured: true },
+            { id: 18, title: "Overgeared", author: "Rain", genre: "action", status: "ongoing", rating: 4.6, chapters: 200, desc: "Finds legendary blacksmith class.", image: "https://i.pinimg.com/736x/9c/be/5f/9cbe5f1ff4b27c07f9360633994fa629.jpg", featured: true },
+            { id: 19, title: "Memorize", author: "Roy", genre: "action", status: "ongoing", rating: 4.5, chapters: 150, desc: "Uses future knowledge in game world.", image: "https://i.pinimg.com/736x/d6/89/93/d689931f81bc2602e85be6844f7791d1.jpg", featured: true },
+            { id: 20, title: "The Max Level Hero Has Returned", author: "Kim", genre: "fantasy", status: "ongoing", rating: 4.5, chapters: 100, desc: "Hero returns to save kingdom.", image: "https://i.pinimg.com/736x/ef/32/fc/ef32fcb288e4d58409a6f639cf0683e4.jpg", featured: true },
+            { id: 21, title: "Doctor's Rebirth", author: "Yoon", genre: "murim", status: "ongoing", rating: 4.4, chapters: 95, desc: "Doctor reincarnates in murim.", image: "https://i.pinimg.com/736x/ed/60/ed/ed60ed0f2dc6fdfb966acea64a68f9e0.jpg", featured: true },
+            { id: 22, title: "Reformation of the Deadbeat Noble", author: "Lee", genre: "academy", status: "ongoing", rating: 4.4, chapters: 85, desc: "Lazy noble becomes knight.", image: "https://i.pinimg.com/736x/78/65/46/7865468147a2ce361853e9e3373bdf05.jpg", featured: true },
+            { id: 23, title: "Revenge of the Iron-Blooded Sword Hound", author: "Kim", genre: "revenge", status: "ongoing", rating: 4.5, chapters: 105, desc: "Swordsman seeks revenge.", image: "https://i.pinimg.com/736x/5c/d3/74/5cd37426b451d284fbbb8931076db263.jpg", featured: true },
+            { id: 24, title: "The S-Classes That I Raised", author: "Park", genre: "system", status: "ongoing", rating: 4.4, chapters: 90, desc: "Raises S-class heroes.", image: "https://i.pinimg.com/1200x/cf/11/ee/cf11ee5fb240e0251653c50804eb2091.jpg", featured: true },
+            { id: 25, title: "The Tutorial Is Too Hard", author: "Gandara", genre: "system", status: "ongoing", rating: 4.5, chapters: 110, desc: "Stuck in impossible tutorial.", image: "https://i.pinimg.com/736x/f4/c1/39/f4c139a046b6b9864b387dc7ee64fcd0.jpg", featured: true },
+            { id: 26, title: "Leveling With The Gods", author: "Oh", genre: "system", status: "ongoing", rating: 4.6, chapters: 125, desc: "Climbs tower with gods.", image: "https://i.pinimg.com/736x/52/38/fd/5238fd73cd296b6575699cff738e79ee.jpg", featured: true },
+            { id: 27, title: "Worthless Regression", author: "Park", genre: "regression", status: "ongoing", rating: 4.3, chapters: 85, desc: "Regression with worthless skills.", image: "https://i.pinimg.com/736x/dc/19/3e/dc193ec7adf04d929b5dcc0750e1c7c2.jpg", featured: true },
+            { id: 28, title: "The World After The Fall", author: "Sing-Shong", genre: "apocalypse", status: "ongoing", rating: 4.7, chapters: 115, desc: "Survives post-apocalyptic world.", image: "https://i.pinimg.com/736x/6e/0a/ff/6e0affec675960110babda874b97cfa1.jpg", featured: true },
+            { id: 29, title: "Heavenly Demon Can't Live a Normal Life", author: "Kim", genre: "murim", status: "ongoing", rating: 4.5, chapters: 120, desc: "Heavenly demon tries normal life.", image: "https://i.pinimg.com/736x/4e/68/05/4e6805cae2bda62a67c2289c52782870.jpg", featured: true },
+            { id: 30, title: "The Player Hides His Past", author: "Lee", genre: "system", status: "ongoing", rating: 4.4, chapters: 100, desc: "Hides past identity.", image: "https://i.pinimg.com/1200x/5a/ea/5f/5aea5f4a41330083f1d355b3f1aac82a.jpg", featured: true },
+            { id: 31, title: "Tower of God", author: "SIU", genre: "fantasy", status: "ongoing", rating: 4.8, chapters: 500, desc: "Follows a boy climbing a mysterious tower.", image: "https://i.pinimg.com/736x/43/5f/7f/435f7f4eda56334b01467a28882a4303.jpg", featured: true },
+            { id: 32, title: "Noblesse", author: "Son Jeho & Lee Kwangsu", genre: "action", status: "completed", rating: 4.7, chapters: 544, desc: "Vampire noble wakes in modern world.", image: "https://i.pinimg.com/736x/ef/c4/8b/efc48b4e898b7a9c9f2b011b3c9d6b4b.jpg", featured: true },
+            { id: 33, title: "The God of High School", author: "Yongje Park", genre: "action", status: "completed", rating: 4.6, chapters: 470, desc: "Martial arts tournament with supernatural stakes.", image: "https://i.pinimg.com/736x/56/a3/ef/56a3efdf65bcf9eb15c84f4c45c0c9a4.jpg", featured: true },
+            { id: 34, title: "Lookism", author: "Park Tae-jun", genre: "drama", status: "ongoing", rating: 4.4, chapters: 469, desc: "Student can switch bodies between handsome and original self.", image: "https://i.pinimg.com/736x/5a/f2/63/5af263cc9e414d4afd5eaa1f5c09f189.jpg", featured: true },
+            { id: 35, title: "The Gamer", author: "Sung San-Young", genre: "action", status: "ongoing", rating: 4.3, chapters: 300, desc: "Ordinary student gets a game-like system.", image: "https://i.pinimg.com/1200x/c6/b1/f3/c6b1f3e446cc86d46614e3a2d59dfdf9.jpg", featured: true },
+            { id: 36, title: "Hardcore Leveling Warrior", author: "Sehoon & Jeon", genre: "action", status: "ongoing", rating: 4.2, chapters: 300, desc: "Top player loses everything and fights back.", image: "https://i.pinimg.com/736x/bf/60/4d/bf604d34202f3ca3cb3b2866db7fb738.jpg", featured: true },
+            { id: 37, title: "Sweet Home", author: "Kim Carnby & Hwang Young-chan", genre: "horror", status: "completed", rating: 4.5, chapters: 130, desc: "Apartment complex beset by monsters.", image: "https://i.pinimg.com/1200x/0a/d6/64/0ad6642ae619f5aa6fe41851d7f97761.jpg", featured: true },
+            { id: 38, title: "The Breaker", author: "Jeon Geuk-jin & Park Jin-hwan", genre: "martial arts", status: "completed", rating: 4.6, chapters: 72, desc: "Weak student becomes disciple of powerful martial artist.", image: "https://i.pinimg.com/736x/91/23/1c/91231c0019700fac92e78cc3eac81f67.jpg", featured: true },
+            { id: 39, title: "The Breaker: New Waves", author: "Jeon Geuk-jin & Park Jin-hwan", genre: "martial arts", status: "completed", rating: 4.5, chapters: 70, desc: "Sequel to The Breaker continuing the martial conflict.", image: "https://i.pinimg.com/1200x/1c/07/a0/1c07a0873d9362b48272d57923d48afd.jpg", featured: true },
+            { id: 40, title: "DICE: The Cube That Changes Everything", author: "Yun Hyunseok", genre: "fantasy", status: "completed", rating: 4.4, chapters: 168, desc: "Game-like dice change people's stats and fate.", image: "https://i.pinimg.com/736x/a2/ec/69/a2ec699c1dc26247befddf570e13c926.jpg", featured: true },
+            { id: 41, title: "UnOrdinary", author: "uru-chan", genre: "superhero", status: "ongoing", rating: 4.5, chapters: 534, desc: "School full of superhumans with hidden pasts.", image: "https://i.pinimg.com/1200x/23/87/25/2387255d05ebd94028a15e2fdbc14904.jpg", featured: true },
+            { id: 42, title: "Eleceed", author: "Son Jeho & ZHENA", genre: "action", status: "ongoing", rating: 4.6, chapters: 300, desc: "Fast hero with sweet cat partner uses speed and kicks.", image: "https://i.pinimg.com/736x/45/f0/59/45f059dc9783a767417ce96f5205b5e4.jpg", featured: true },
+            { id: 43, title: "Girls of the Wild's", author: "Hun & Zhena", genre: "action", status: "completed", rating: 4.2, chapters: 200, desc: "Boy enters an all-girls martial arts school.", image: "https://i.pinimg.com/736x/e6/92/52/e69252e7f5454e327aabe28a7b4b6d3c.jpg", featured: true },
+            { id: 44, title: "The Boxer", author: "JH", genre: "sports", status: "completed", rating: 4.3, chapters: 80, desc: "Ruthless boxer meets genius prodigy.", image: "https://i.pinimg.com/736x/b3/23/09/b3230972dd18c2dc32ec38a498d42f39.jpg", featured: true },
+            { id: 45, title: "Bastard", author: "Carnby Kim & Young-chan Hwang", genre: "thriller", status: "completed", rating: 4.4, chapters: 50, desc: "Teen lives with serial killer father.", image: "https://i.pinimg.com/736x/42/0a/a9/420aa9ef77cd69f917e8ec7eca3b7d12.jpg", featured: true },
+            { id: 46, title: "The Live", author: "Arrow & Jeong Jun", genre: "action", status: "ongoing", rating: 4.2, chapters: 120, desc: "Survivor gets a second chance in a deadly world.", image: "https://i.pinimg.com/736x/6a/d5/73/6ad5734014541daeb875941eeac53a4b.jpg", featured: true },
+            { id: 47, title: "Peerless Dad", author: "Manhwa Author", genre: "family", status: "ongoing", rating: 4.1, chapters: 80, desc: "Parent returns with hidden power to protect family.", image: "https://i.pinimg.com/736x/c0/22/73/c022734bf67d4e03972675397fb92c2b.jpg", featured: true },
+            { id: 48, title: "Rebirth of the Urban Immortal Cultivator", author: "Ten Thousand Swords", genre: "cultivation", status: "ongoing", rating: 4.0, chapters: 220, desc: "From city to cultivation path, reborn with power.", image: "https://i.pinimg.com/1200x/41/5b/f3/415bf35993cc84b8259a1d8abe1e26bf.jpg", featured: true },
+            { id: 49, title: "The Remarried Empress", author: "Alphatart & Sumpul", genre: "romance", status: "ongoing", rating: 4.7, chapters: 80, desc: "Empress navigates politics and remarriage.", image: "https://i.pinimg.com/1200x/6d/2f/33/6d2f33a3971409e668c306a89cfe6ff5.jpg", featured: true },
+            { id: 50, title: "The Villainess Reverses the Hourglass", author: "Sung-ya", genre: "romance", status: "ongoing", rating: 4.3, chapters: 120, desc: "Rewinds time to take revenge and reclaim life.", image: "https://i.pinimg.com/1200x/ad/1a/2c/ad1a2cb42c4c1618bab36b2234fe1467.jpg", featured: true },
+            { id: 51, title: "Tales of Demons and Gods", author: "Mad Snail", genre: "xianxia", status: "ongoing", rating: 4.2, chapters: 200, desc: "Reborn genius fights demons to save his city.", image: "https://i.pinimg.com/736x/eb/4d/bf/eb4dbf96b20ca532b3802227987e7cc2.jpg", featured: true },
+            { id: 52, title: "Martial Peak", author: "Momo", genre: "cultivation", status: "ongoing", rating: 4.1, chapters: 4000, desc: "Endless martial cultivation to the peak.", image: "https://i.pinimg.com/1200x/46/5f/81/465f8130996924643d7802866d9f8af3.jpg", featured: true },
+            { id: 53, title: "The King's Avatar", author: "Butterfly Blue", genre: "esports", status: "completed", rating: 4.6, chapters: 175, desc: "Top pro gamer restarts from zero.", image: "https://i.pinimg.com/1200x/c5/e8/2d/c5e82d5f623c19828ea0f50e38bcd391.jpg", featured: true },
+            { id: 54, title: "My Wife is a Demon Queen", author: "Feng Qing Yang", genre: "fantasy", status: "ongoing", rating: 4.1, chapters: 150, desc: "Husband lives with demon queen wife in comedic fantasy.", image: "https://i.pinimg.com/736x/38/11/88/38118812660ec9473710b1a6c1ce98b0.jpg", featured: true },
+            { id: 55, title: "Peerless Martial God", author: "Wang", genre: "cultivation", status: "ongoing", rating: 4.0, chapters: 800, desc: "Overpowered cultivator dominates the world.", image: "https://i.pinimg.com/736x/e4/74/79/e474791fe969bac57049d714533ce240.jpg", featured: true },
+            { id: 56, title: "God of Martial Arts", author: "X", genre: "Murim", status: "ongoing", rating: 4.0, chapters: 320, desc: "Fights and growth in martial universe.", image: "https://i.pinimg.com/736x/e4/74/79/e474791fe969bac57049d714533ce240.jpg", featured: true },
+            { id: 57, title: "The Villainess Lives Twice", author: "Unknown", genre: "romance", status: "ongoing", rating: 4.2, chapters: 90, desc: "Reincarnates to change destiny.", image: "https://i.pinimg.com/736x/fb/7d/9c/fb7d9c34926dd6f82cfe3e915a4995a6.jpg", featured: true },
+            { id: 58, title: "Return of the Blossoming Blade", author: "Unknown", genre: "action", status: "ongoing", rating: 4.1, chapters: 120, desc: "Blade returns stronger to exact revenge.", image: "https://i.pinimg.com/736x/f4/21/c3/f421c354ade847fe8072f4140e2066b7.jpg", featured: true },
+            { id: 59, title: "The Legendary Moonlight Sculptor", author: "Nam Heesung", genre: "game", status: "ongoing", rating: 4.4, chapters: 120, desc: "Gamer becomes legendary sculptor in VRMMO.", image: "https://i.pinimg.com/1200x/9f/b1/ab/9fb1ab33f5a11cf647f262939e1587a4.jpg", featured: true },
+            { id: 60, title: "Noble Lady Reformation Guide", author: "Goat Korita (adapted)", genre: "fantasy", status: "ongoing", rating: 4.5, chapters: 15, desc: "A commoner magic tutor reforms rude noble ladies into proper humans in a prestigious academy world. 2026 fresh release!", image: "https://i.pinimg.com/736x/12/fd/55/12fd554c630e049a113c0ce883ec3698.jpg", featured: true },
+            { id: 61, title: "Sichuan’s Supreme King", author: "Unknown (from Second Life Ranker studio vibes)", genre: "wuxia", status: "ongoing", rating: 4.2, chapters: 10, desc: "Demonic craftsman returns in the Age of Demonic Practitioners for revenge and supremacy. Newly listed 2026 hit.", image: "https://gg.asuracomic.net/storage/media/406323/conversions/01KEHFHB43DM922GPFW31RB9SF-optimized.webp", featured: true },
+            { id: 62, title: "Spirit Sword Mountain", author: "Zhenwu", genre: "xianxia", status: "ongoing", rating: 4.1, chapters: 300, desc: "Cultivation school politics and power.", image: "https://i.pinimg.com/736x/7b/7f/dc/7b7fdc842bbf745a6d0b8de7834bdf9f.jpg", featured: true },
+            { id: 63, title: "A Villain’s Will to Survive", author: "Unknown", genre: "action", status: "ongoing", rating: 4.4, chapters: 50, desc: "Game developer reincarnates as a doomed villain boss fighting fate to survive. 2025 ongoing with strong twists.", image: "https://i.pinimg.com/1200x/d2/d4/fe/d2d4fe078833f7d30dbcf67d4dc506db.jpg", featured: true },
+            { id: 64, title: "Level 999 Goblin", author: "GOMGOM", genre: "action", status: "ongoing", rating: 4.1, chapters: 35, desc: "Loser gets Goblin Summoner class with a max-level OP goblin pet causing chaos. Rising 2025 action fantasy.", image: "https://i.pinimg.com/736x/42/2d/6e/422d6ec882fe2faff6e4ddee048c0d1e.jpg", featured: true },
+            { id: 65, title: "Genius Prismatic Mage", author: "Hasu / Kang Kang", genre: "magic ", status: "ongoing", rating: 4.3, chapters: 20, desc: "Orphan sees mana as colors and masters unique prismatic magic in a brutal world. 2025 magic/isekai vibes.", image: "https://i.pinimg.com/736x/6f/fd/c1/6ffdc11732b00ea975d3b715fe0d077b.jpg", featured: true },
+            { id: 66, title: "Limit-Breaking Genius Mage", author: "Unknown", genre: "fantasy", status: "ongoing", rating: 4.0, chapters: 25, desc: "Genius mage pushes limits beyond imagination in academy battles.", image: "https://i.pinimg.com/736x/1a/46/99/1a4699c49aebcc16d00607dba0eb8bde.jpg", featured: true },
+            { id: 67, title: "The Academy’s Sashimi Swordmaster", author: "Unknown", genre: "action", status: "ongoing", rating: 3.9, chapters: 18, desc: "Swordmaster reincarnates and masters... cooking sashimi at academy? Hilarious twist.", image: "https://i.pinimg.com/736x/f0/54/17/f05417a8aac041d34d01663491376147.jpg", featured: true },
+            { id: 68, title: "Echoes of the Reverse Planet", author: "Unknown", genre: "sci-fi", status: "ongoing", rating: 4.0, chapters: 30, desc: "Mysterious echoes from a reversed world lead to epic adventures. 2025 release.", image: "https://i.pinimg.com/736x/cd/8e/a8/cd8ea8bf72ad1fc9f92569b21ad9eed3.jpg", featured: true },
+            { id: 69, title: "Reborn on the Demonic Cult Battlefield", author: "Unknown", genre: "martial arts", status: "ongoing", rating: 4.2, chapters: 40, desc: "Rebirth into demonic cult wars with revenge and power growth.", image: "https://gg.asuracomic.net/storage/media/363559/conversions/01K65F3W2PEJYBCY3P3A995Y6H-optimized.webp", featured: true },
+            { id: 70, title: "Rebirth of the Divine Demon", author: "Unknown", genre: "action", status: "ongoing", rating: 4.1, chapters: 35, desc: "Divine demon reborn to dominate realms anew. 2025 hot pick.", image: "https://i.pinimg.com/1200x/52/65/77/526577c1e4c8709f0199f136494192aa.jpg", featured: true },
+            { id: 71, title: "Dukedom’s Legendary Prodigy", author: "Unknown", genre: "fantasy", status: "ongoing", rating: 4.0, chapters: 28, desc: "Prodigy rises in dukedom politics and battles. 2025 series.", image: "https://i.pinimg.com/736x/3f/10/94/3f1094af056d1df0ab67653395aef041.jpg", featured: true },
+            { id: 72, title: "Initializing the Sect System", author: "Unknown", genre: "cultivation", status: "ongoing", rating: 3.8, chapters: 22, desc: "System initializes sect-building in a cultivation world.", image: "https://gg.asuracomic.net/storage/media/382216/conversions/01KAB1X18K3JZGNG5TA5K6H50K-optimized.webp", featured: true },
+            { id: 73, title: "Raising Villains the Right Way", author: "Unknown", genre: "fantasy", status: "ongoing", rating: 4.1, chapters: 45, desc: "Raising future villains properly for survival. 2025 ongoing fun.", image: "https://i.pinimg.com/736x/df/90/e1/df90e15851fdd0c7c129bac6c6f58ddb.jpg", featured: true },
+            { id: 74, title: "Breakers", author: "Unknown", genre: "action", status: "ongoing", rating: 3.9, chapters: 30, desc: "Breakers shatter limits in high-stakes fights. 2025.", image: "https://i.pinimg.com/736x/02/0c/93/020c935da50e4a45f8a89648d9cfe129.jpg", featured: true },
+            { id: 75, title: "The Tang Clan Chronicles", author: "Unknown", genre: "martial arts", status: "ongoing", rating: 4.0, chapters: 38, desc: "Chronicles of the legendary Tang Clan battles. 2025.", image: "https://i.pinimg.com/736x/52/9c/e9/529ce98201e608ed14358745c55cfc8c.jpg", featured: true },
+            { id: 76, title: "Starting With 13 Hidden Traits", author: "Unknown", genre: "fantasy", status: "ongoing", rating: 4.2, chapters: 25, desc: "Awakens with 13 OP hidden traits for dominance.", image: "https://gg.asuracomic.net/storage/media/385998/conversions/01KBB4MA2CBQN17PKXDMK95RD1-optimized.webp", featured: true },
+            { id: 77, title: "The Demon King Overrun by Heroes", author: "Unknown", genre: "comedy", status: "ongoing", rating: 3.9, chapters: 32, desc: "Demon king overwhelmed by incoming heroes. 2025 twist.", image: "https://i.pinimg.com/736x/9b/3a/94/9b3a942cb8e0059d8233269049faa368.jpg", featured: true },
+            { id: 78, title: "Solo Farming in the Tower", author: "Lim Hyeong", genre: "slice of life", status: "ongoing", rating: 4.4, chapters: 110, desc: "Trapped in tower, focuses on farming for survival and growth. 2025 trending cozy hit.", image: "https://i.pinimg.com/736x/39/5f/fa/395ffa5b839a4f7121ea3b012d2f521a.jpg", featured: true },
+            { id: 79, title: "Legendary Hero Is an Academy Honors Student", author: "Unknown", genre: "academy", status: "ongoing", rating: 4.1, chapters: 50, desc: "Legendary hero attends academy as top student. 2025 ongoing.", image: "https://i.pinimg.com/736x/91/9f/60/919f607db214e0148c6ee34af9d35e96.jpg", featured: true },
+            { id: 80, title: "The Regressed Bastard of the Sword Clan", author: "Bread-Eating Squirrel (novel)", genre: "action", status: "ongoing", rating: 4.3, chapters: 80, desc: "Bastard son regresses to change his fate in sword clan. Ongoing powerhouse.", image: "https://i.pinimg.com/736x/7e/81/22/7e8122e904f4ac102704dcaf307effbe.jpg", featured: true }];
+
+        class EnhancedManhwaApp {
+            constructor() {
+                this.itemsPerPage = 24;
+                this.currentPage = 1;
+                this.filteredManhwa = [...manhwaData];
+                this.debounceTimer = null;
+                this.currentView = 'grid';
+                this.bookmarks = JSON.parse(localStorage.getItem('comixhub_bookmarks')) || [];
+
+                this.elements = {
+                    grid: document.getElementById('manhwaGrid'),
+                    search: document.getElementById('searchInput'),
+                    headerSearch: document.getElementById('headerSearch'),
+                    genreFilter: document.getElementById('genreFilter'),
+                    statusFilter: document.getElementById('statusFilter'),
+                    sortFilter: document.getElementById('sortFilter'),
+                    loading: document.getElementById('loadingIndicator'),
+                    noResults: document.getElementById('noResults'),
+                    resultsCount: document.getElementById('resultsCount'),
+                    pagination: document.getElementById('pagination'),
+                    mobileMenuToggle: document.getElementById('mobileMenuToggle'),
+                    mobileMenu: document.getElementById('mobileMenu'),
+                    viewToggle: document.getElementById('viewToggle')
+                };
+
+                this.init();
+            }
+
+            init() {
+                const genres = [...new Set(manhwaData.map(m => m.genre))].sort();
+                genres.forEach(genre => {
+                    const option = document.createElement('option');
+                    option.value = genre;
+                    option.textContent = this.capitalizeFirstLetter(genre);
+                    this.elements.genreFilter.appendChild(option);
+                });
+
+                this.setupEventListeners();
+                this.setupViewToggle();
+
+                this.filterManhwa();
+
+                this.showNotification('Welcome to ComixHub Manhwa Collection!', 'info');
+            }
+
+            setupEventListeners() {
+                const debounce = (fn, delay) => {
+                    return (...args) => {
+                        clearTimeout(this.debounceTimer);
+                        this.debounceTimer = setTimeout(() => fn.apply(this, args), delay);
+                    };
+                };
+
+                this.elements.search.addEventListener('input', debounce(() => {
+                    this.elements.headerSearch.value = this.elements.search.value;
+                    this.filterManhwa();
+                }, 300));
+
+                this.elements.headerSearch.addEventListener('input', debounce(() => {
+                    this.elements.search.value = this.elements.headerSearch.value;
+                    this.filterManhwa();
+                }, 300));
+
+                this.elements.genreFilter.addEventListener('change', () => this.filterManhwa());
+                this.elements.statusFilter.addEventListener('change', () => this.filterManhwa());
+                this.elements.sortFilter.addEventListener('change', () => this.filterManhwa());
+
+                this.elements.mobileMenuToggle.addEventListener('click', () => {
+                    this.elements.mobileMenu.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!this.elements.mobileMenuToggle.contains(e.target) &&
+                        !this.elements.mobileMenu.contains(e.target)) {
+                        this.elements.mobileMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            setupViewToggle() {
+                const viewButtons = this.elements.viewToggle.querySelectorAll('.view-btn');
+                viewButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        viewButtons.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentView = btn.dataset.view;
+                        this.render();
+                    });
+                });
+            }
+
+            filterManhwa() {
+                const searchTerm = this.elements.search.value.toLowerCase().trim();
+                const genre = this.elements.genreFilter.value;
+                const status = this.elements.statusFilter.value;
+                const sort = this.elements.sortFilter.value;
+
+                this.elements.loading.classList.remove('hidden');
+                this.elements.grid.innerHTML = '';
+                this.elements.noResults.classList.add('hidden');
+
+                this.filteredManhwa = manhwaData.filter(manhwa => {
+                    if (genre !== 'all' && manhwa.genre !== genre) return false;
+                    if (status !== 'all' && manhwa.status !== status) return false;
+                    if (searchTerm &&
+                        !manhwa.title.toLowerCase().includes(searchTerm) &&
+                        !manhwa.author.toLowerCase().includes(searchTerm) &&
+                        !manhwa.desc.toLowerCase().includes(searchTerm)) {
+                        return false;
+                    }
+                    return true;
+                });
+
+                this.sortManhwa(sort);
+                this.currentPage = 1;
+                this.render();
+            }
+
+            sortManhwa(sortType) {
+                switch (sortType) {
+                    case 'rating':
+                        this.filteredManhwa.sort((a, b) => b.rating - a.rating);
+                        break;
+                    case 'chapters':
+                        this.filteredManhwa.sort((a, b) => b.chapters - a.chapters);
+                        break;
+                    case 'title':
+                        this.filteredManhwa.sort((a, b) => a.title.localeCompare(b.title));
+                        break;
+                    case 'newest':
+                        this.filteredManhwa.sort((a, b) => b.id - a.id);
+                        break;
+                    default:
+                        this.filteredManhwa.sort((a, b) => {
+                            const scoreA = (a.rating * 20) + (a.featured ? 50 : 0) + (a.chapters / 10);
+                            const scoreB = (b.rating * 20) + (b.featured ? 50 : 0) + (b.chapters / 10);
+                            return scoreB - scoreA;
+                        });
+                }
+            }
+
+            render() {
+                const start = (this.currentPage - 1) * this.itemsPerPage;
+                const end = start + this.itemsPerPage;
+                const pageItems = this.filteredManhwa.slice(start, end);
+
+                this.elements.grid.style.opacity = '0';
+
+                setTimeout(() => {
+                    this.elements.grid.innerHTML = '';
+
+                    this.elements.grid.className = 'manhwa-grid';
+                    if (this.currentView === 'list') {
+                        this.elements.grid.classList.add('list-view');
+                    } else if (this.currentView === 'compact') {
+                        this.elements.grid.classList.add('compact-view');
+                    }
+
+                    pageItems.forEach((manhwa, index) => {
+                        const card = this.createCard(manhwa, index);
+                        this.elements.grid.appendChild(card);
+                    });
+
+                    this.elements.grid.style.opacity = '1';
+                }, 300);
+
+                this.elements.loading.classList.add('hidden');
+
+                this.elements.resultsCount.textContent =
+                    `Showing ${start + 1}-${Math.min(end, this.filteredManhwa.length)} of ${this.filteredManhwa.length} manhwa`;
+
+                if (this.filteredManhwa.length === 0) {
+                    this.elements.noResults.classList.remove('hidden');
+                }
+
+                this.renderPagination();
+            }
+
+            createCard(manhwa, index) {
+                const card = document.createElement('div');
+                card.className = 'manhwa-card';
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.dataset.id = manhwa.id;
+
+                const badgeColor = manhwa.status === 'completed' ? '#2ecc71' :
+                    manhwa.status === 'hiatus' ? '#f39c12' : '#3498db';
+
+                const isBookmarked = this.bookmarks.includes(manhwa.id);
+                const bookmarkIcon = isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark';
+
+                card.innerHTML = `
+                    <div class="card-image-container">
+                        <div class="card-badge">${manhwa.status.toUpperCase()}</div>
+                        ${manhwa.image ?
+                        `<img src="${manhwa.image}" alt="${manhwa.title}" class="card-image" onerror="this.src='https://via.placeholder.com/300x400/2c3e50/ecf0f1?text=${encodeURIComponent(manhwa.title)}'">` :
+                        `<div class="card-image-placeholder">
+                            <i class="fas fa-book-open"></i>
+                            <div class="title-text">${manhwa.title}</div>
+                        </div>`
+                    }
+                        <div class="card-image-overlay">
+                            <button class="bookmark-btn absolute top-4 left-4 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors" data-id="${manhwa.id}">
+                                <i class="${bookmarkIcon}"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${manhwa.title}</h3>
+                        <p class="card-author"><i class="fas fa-user-edit"></i> ${manhwa.author}</p>
+                        <p class="card-description">${manhwa.desc}</p>
+                        <div class="card-footer">
+                            <div class="card-rating">
+                                <i class="fas fa-star"></i>
+                                <span>${manhwa.rating.toFixed(1)}</span>
+                                <span class="genre-tag">${manhwa.genre}</span>
+                            </div>
+                            <div class="card-chapters">
+                                <i class="fas fa-file-alt"></i>
+                                <span>${manhwa.chapters}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.bookmark-btn')) {
+                        this.showManhwaDetails(manhwa);
+                    }
+                });
+
+                const bookmarkBtn = card.querySelector('.bookmark-btn');
+                bookmarkBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.toggleBookmark(manhwa.id);
+                    const icon = bookmarkBtn.querySelector('i');
+                    if (this.bookmarks.includes(manhwa.id)) {
+                        icon.className = 'fas fa-bookmark';
+                        this.showNotification(`Added "${manhwa.title}" to bookmarks`, 'success');
+                    } else {
+                        icon.className = 'far fa-bookmark';
+                        this.showNotification(`Removed "${manhwa.title}" from bookmarks`, 'info');
+                    }
+                });
+
+                return card;
+            }
+
+            toggleBookmark(manhwaId) {
+                const index = this.bookmarks.indexOf(manhwaId);
+                if (index > -1) {
+                    this.bookmarks.splice(index, 1);
+                } else {
+                    this.bookmarks.push(manhwaId);
+                }
+                localStorage.setItem('comixhub_bookmarks', JSON.stringify(this.bookmarks));
+            }
+
+            showManhwaDetails(manhwa) {
+                const modal = document.createElement('div');
+                modal.className = 'manhwa-modal';
+
+                const isBookmarked = this.bookmarks.includes(manhwa.id);
+                const bookmarkText = isBookmarked ? 'Bookmarked' : 'Bookmark';
+                const bookmarkIcon = isBookmarked ? 'fas fa-bookmark' : 'far fa-bookmark';
+
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="close-modal absolute top-4 right-4 w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center text-white hover:bg-gray-800 transition-colors text-xl">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <div class="lg:w-1/3">
+                                <img src="${manhwa.image || 'https://via.placeholder.com/300x400/2c3e50/ecf0f1?text=No+Image'}" 
+                                     alt="${manhwa.title}" 
+                                     class="w-full rounded-2xl shadow-2xl">
+                            </div>
+                            <div class="lg:w-2/3">
+                                <h2 class="text-3xl font-bold mb-2 bg-gradient-to-r from-[#e94560] to-[#ff7e5f] bg-clip-text text-transparent">${manhwa.title}</h2>
+                                <p class="text-gray-400 text-xl mb-6"><i class="fas fa-user-edit mr-2"></i>${manhwa.author}</p>
+                                
+                                <div class="flex flex-wrap gap-3 mb-6">
+                                    <span class="px-4 py-2 rounded-full bg-gradient-to-r from-[#e94560] to-[#ff7e5f] text-white font-bold">
+                                        ${manhwa.status.toUpperCase()}
+                                    </span>
+                                    <span class="px-4 py-2 rounded-full bg-blue-500/20 text-blue-400 font-bold border border-blue-500/30">
+                                        ${manhwa.genre.toUpperCase()}
+                                    </span>
+                                    <span class="px-4 py-2 rounded-full bg-green-500/20 text-green-400 font-bold border border-green-500/30">
+                                        ${manhwa.chapters} CHAPTERS
+                                    </span>
+                                    <span class="px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-400 font-bold border border-yellow-500/30">
+                                        ${manhwa.rating.toFixed(1)} ★
+                                    </span>
+                                </div>
+                                
+                                <div class="bg-gray-900/50 rounded-2xl p-6 mb-6">
+                                    <h3 class="text-xl font-bold mb-3 text-white">Description</h3>
+                                    <p class="text-gray-300 leading-relaxed">${manhwa.desc}</p>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-4">
+                                    <button class="modal-bookmark-btn px-6 py-3 rounded-xl bg-gradient-to-r from-[#e94560] to-[#ff7e5f] text-white font-bold hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 flex items-center gap-2">
+                                        <i class="${bookmarkIcon}"></i>${bookmarkText}
+                                    </button>
+                                    <button class="close-btn px-6 py-3 rounded-xl bg-gray-800 text-white font-bold hover:bg-gray-700 transition-colors">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+                document.body.style.overflow = 'hidden';
+
+                const closeModal = () => {
+                    document.body.removeChild(modal);
+                    document.body.style.overflow = '';
+                };
+
+                modal.querySelector('.close-modal').addEventListener('click', closeModal);
+                modal.querySelector('.close-btn').addEventListener('click', closeModal);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
+                });
+
+                const bookmarkBtn = modal.querySelector('.modal-bookmark-btn');
+                bookmarkBtn.addEventListener('click', () => {
+                    this.toggleBookmark(manhwa.id);
+                    const icon = bookmarkBtn.querySelector('i');
+                    if (this.bookmarks.includes(manhwa.id)) {
+                        icon.className = 'fas fa-bookmark';
+                        bookmarkBtn.innerHTML = '<i class="fas fa-bookmark"></i>Bookmarked';
+                        this.showNotification(`Added "${manhwa.title}" to bookmarks`, 'success');
+                    } else {
+                        icon.className = 'far fa-bookmark';
+                        bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i>Bookmark';
+                        this.showNotification(`Removed "${manhwa.title}" from bookmarks`, 'info');
+                    }
+                });
+            }
+
+            renderPagination() {
+                const totalPages = Math.ceil(this.filteredManhwa.length / this.itemsPerPage);
+
+                if (totalPages <= 1) {
+                    this.elements.pagination.innerHTML = '';
+                    return;
+                }
+
+                let html = '';
+
+                html += `
+                    <button class="page-btn ${this.currentPage === 1 ? 'disabled' : ''}" 
+                            ${this.currentPage === 1 ? 'disabled' : ''}
+                            onclick="manhwaApp.changePage(${this.currentPage - 1})">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>`;
+
+                const maxVisible = 5;
+                let start = Math.max(1, this.currentPage - Math.floor(maxVisible / 2));
+                let end = Math.min(totalPages, start + maxVisible - 1);
+
+                if (end - start + 1 < maxVisible) {
+                    start = Math.max(1, end - maxVisible + 1);
+                }
+
+                if (start > 1) {
+                    html += `<button class="page-btn" onclick="manhwaApp.changePage(1)">1</button>`;
+                    if (start > 2) html += `<span class="page-btn disabled">...</span>`;
+                }
+
+                for (let i = start; i <= end; i++) {
+                    html += `
+                        <button class="page-btn ${i === this.currentPage ? 'active' : ''}" 
+                                onclick="manhwaApp.changePage(${i})">
+                            ${i}
+                        </button>`;
+                }
+
+                if (end < totalPages) {
+                    if (end < totalPages - 1) html += `<span class="page-btn disabled">...</span>`;
+                    html += `<button class="page-btn" onclick="manhwaApp.changePage(${totalPages})">${totalPages}</button>`;
+                }
+
+                html += `
+                    <button class="page-btn ${this.currentPage === totalPages ? 'disabled' : ''}" 
+                            ${this.currentPage === totalPages ? 'disabled' : ''}
+                            onclick="manhwaApp.changePage(${this.currentPage + 1})">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>`;
+
+                this.elements.pagination.innerHTML = html;
+            }
+
+            changePage(page) {
+                const totalPages = Math.ceil(this.filteredManhwa.length / this.itemsPerPage);
+
+                if (page < 1 || page > totalPages || page === this.currentPage) {
+                    return;
+                }
+
+                this.currentPage = page;
+                this.render();
+
+                this.elements.grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            resetFilters() {
+                this.elements.search.value = '';
+                this.elements.headerSearch.value = '';
+                this.elements.genreFilter.value = 'all';
+                this.elements.statusFilter.value = 'all';
+                this.elements.sortFilter.value = 'popular';
+                this.filterManhwa();
+                this.showNotification('Filters reset', 'info');
+            }
+
+            scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            randomManhwa() {
+                if (this.filteredManhwa.length === 0) return;
+                const randomIndex = Math.floor(Math.random() * this.filteredManhwa.length);
+                this.showManhwaDetails(this.filteredManhwa[randomIndex]);
+            }
+
+            toggleDarkMode() {
+                const isDark = document.body.classList.contains('light-mode');
+                if (isDark) {
+                    document.body.classList.remove('light-mode');
+                    this.showNotification('Dark mode activated', 'info');
+                } else {
+                    document.body.classList.add('light-mode');
+                    this.showNotification('Light mode activated', 'info');
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const existing = document.querySelector('.notification');
+                if (existing) existing.remove();
+
+                const notification = document.createElement('div');
+                notification.className = `notification fixed top-4 right-4 px-6 py-3 rounded-xl font-bold shadow-lg z-2000 transform translate-x-full transition-transform duration-300`;
+
+                const colors = {
+                    success: 'bg-gradient-to-r from-green-500 to-emerald-600',
+                    error: 'bg-gradient-to-r from-red-500 to-pink-600',
+                    info: 'bg-gradient-to-r from-blue-500 to-cyan-600',
+                    warning: 'bg-gradient-to-r from-yellow-500 to-orange-600'
+                };
+
+                notification.className += ` ${colors[type] || colors.info} text-white`;
+                notification.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                requestAnimationFrame(() => {
+                    notification.style.transform = 'translateX(0)';
+                });
+
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+
+            capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        }
+
+        const manhwaApp = new EnhancedManhwaApp();
+        window.manhwaApp = manhwaApp;
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .light-mode {
+                --primary-color: #f8fafc;
+                --secondary-color: #f1f5f9;
+                --accent-color: #e2e8f0;
+                --highlight-color: #dc2626;
+                --highlight-gradient: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --glass-bg: rgba(0, 0, 0, 0.05);
+            }
+            
+            .list-view {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .list-view .manhwa-card {
+                flex-direction: row;
+                height: 200px;
+            }
+            
+            .list-view .card-image-container {
+                width: 150px;
+                height: 100%;
+                flex-shrink: 0;
+            }
+            
+            .compact-view {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+            }
+            
+            .compact-view .card-image-container {
+                height: 200px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>

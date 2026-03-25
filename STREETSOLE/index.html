@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOLEMate — Find Your Perfect Pair</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── THEME TOKENS ─────────────────────────────── */
+    :root {
+      --accent:      #e8ff47;
+      --accent-dim:  rgba(232,255,71,0.15);
+      --accent-soft: rgba(232,255,71,0.07);
+    }
+
+    [data-theme="dark"] {
+      --bg:             #0a0a0a;
+      --bg-2:           #111111;
+      --bg-card:        #141414;
+      --bg-card-2:      #181818;
+      --border:         rgba(255,255,255,0.07);
+      --border-hover:   rgba(255,255,255,0.16);
+      --text-primary:   #f2f2f2;
+      --text-body:      #8a8a8a;
+      --text-muted:     #444444;
+      --logo-color:     #f2f2f2;
+      --nav-bg:         rgba(10,10,10,0.85);
+      --stat-bg:        #111111;
+      --about-text-bg:  #141414;
+      --about-text:     #b0b0b0;
+      --about-head:     #f2f2f2;
+      --shadow:         rgba(0,0,0,0.7);
+      --noise-op:       0.028;
+      --stroke-text:    rgba(255,255,255,0.05);
+    }
+
+    [data-theme="light"] {
+      --bg:             #f0f0ed;
+      --bg-2:           #e6e6e2;
+      --bg-card:        #f8f8f5;
+      --bg-card-2:      #eeeee9;
+      --border:         rgba(0,0,0,0.09);
+      --border-hover:   rgba(0,0,0,0.2);
+      --text-primary:   #0f0f0f;
+      --text-body:      #555555;
+      --text-muted:     #999999;
+      --logo-color:     #0f0f0f;
+      --nav-bg:         rgba(240,240,237,0.9);
+      --stat-bg:        #e6e6e2;
+      --about-text-bg:  #f8f8f5;
+      --about-text:     #444444;
+      --about-head:     #111111;
+      --shadow:         rgba(0,0,0,0.13);
+      --noise-op:       0.018;
+      --stroke-text:    rgba(0,0,0,0.05);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: var(--noise-op);
+      pointer-events: none; z-index: 1000;
+    }
+
+    /* ─── CURSOR ───────────────────────────────────── */
+    * { cursor: none; }
+    #cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+    }
+    #cursor-ring {
+      position: fixed; width: 30px; height: 30px;
+      border: 1px solid rgba(232,255,71,0.45);
+      border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+    }
+
+    /* ─── THEME TOGGLE ─────────────────────────────── */
+    .theme-toggle {
+      position: relative; overflow: hidden;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      display: grid; place-items: center;
+      transition: border-color .3s, transform .3s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); transform: rotate(18deg); }
+    .theme-icon {
+      position: absolute;
+      font-size: 16px;
+      transition: opacity .25s, transform .25s;
+    }
+    [data-theme="dark"]  .theme-icon.sun  { opacity: 0; transform: scale(0.4) rotate(90deg); }
+    [data-theme="dark"]  .theme-icon.moon { opacity: 1; transform: scale(1) rotate(0deg); }
+    [data-theme="light"] .theme-icon.sun  { opacity: 1; transform: scale(1) rotate(0deg); }
+    [data-theme="light"] .theme-icon.moon { opacity: 0; transform: scale(0.4) rotate(-90deg); }
+
+    /* ─── NAVBAR ───────────────────────────────────── */
+    .navbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px; height: 70px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border);
+      transition: background .35s, border-color .35s;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 900;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--logo-color);
+      text-decoration: none;
+      transition: color .35s;
+    }
+    .logo em { font-style: italic; color: var(--accent); }
+    [data-theme="light"] .logo em { filter: brightness(0.7); }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-body);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      position: relative; padding-bottom: 3px;
+      transition: color .25s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; left: 0; bottom: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width .3s ease;
+    }
+    [data-theme="light"] .nav-links a::after { filter: brightness(0.7); }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .nav-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-size: 15px; color: var(--text-body);
+      text-decoration: none;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .nav-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      object-fit: cover; border: 1.5px solid var(--border);
+      transition: border-color .3s;
+    }
+    .avatar:hover { border-color: var(--accent); }
+
+    /* ─── HERO ─────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center;
+      padding: 110px 80px 80px;
+      overflow: hidden;
+      background: var(--bg);
+      transition: background .35s;
+    }
+
+    /* Grid lines */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 72px 72px;
+      z-index: 0;
+    }
+
+    /* Giant ghost text */
+    .hero-ghost {
+      position: absolute;
+      right: -30px; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(240px, 28vw, 420px);
+      font-weight: 900; font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--stroke-text);
+      user-select: none; pointer-events: none;
+      z-index: 0; line-height: 1;
+      transition: -webkit-text-stroke-color .35s;
+    }
+
+    /* Rotating accent circle */
+    .hero-ring {
+      position: absolute;
+      right: 23%; top: 50%;
+      transform: translateY(-50%);
+      width: min(500px, 44vw); height: min(500px, 44vw);
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      z-index: 0;
+      animation: hspin 55s linear infinite;
+    }
+    .hero-ring::before {
+      content: '';
+      position: absolute; inset: -1px; border-radius: 50%;
+      background: conic-gradient(var(--accent) 0deg 6deg, transparent 6deg 360deg);
+      animation: hspin 9s linear infinite reverse;
+    }
+    [data-theme="light"] .hero-ring::before { filter: brightness(0.7); }
+    @keyframes hspin { to { transform: translateY(-50%) rotate(360deg); } }
+
+    /* Shoe image */
+    .hero-shoe {
+      position: absolute;
+      right: 6%; top: 50%;
+      transform: translateY(-50%);
+      width: min(480px, 42vw);
+      z-index: 1;
+      opacity: 0;
+      filter: drop-shadow(0 40px 70px var(--shadow));
+      animation: shoeIn 1s ease .95s forwards;
+    }
+    @keyframes shoeIn {
+      from { opacity:0; transform: translateY(-50%) translateX(50px) rotate(4deg); }
+      to   { opacity:1; transform: translateY(-50%) translateX(0) rotate(0deg); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 540px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp .7s ease .2s forwards;
+    }
+    .hero-badge::before {
+      content: ''; width: 5px; height: 5px;
+      background: var(--accent); border-radius: 50%;
+      animation: blink 2s ease infinite;
+    }
+    [data-theme="light"] .hero-badge::before { filter: brightness(0.7); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+    .hero h4 {
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 12px;
+      opacity: 0; animation: fadeUp .7s ease .35s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(58px, 7.5vw, 96px);
+      font-weight: 900; line-height: 0.95;
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp .7s ease .5s forwards;
+    }
+    .hero h1 .outline {
+      display: block; font-style: italic;
+      -webkit-text-stroke: 1.5px var(--text-primary);
+      color: transparent;
+      transition: -webkit-text-stroke-color .35s;
+    }
+    .hero h1 .glow { color: var(--accent); -webkit-text-stroke: 0; }
+    [data-theme="light"] .hero h1 .glow { filter: brightness(0.65); }
+
+    .hero p {
+      font-size: 14px; line-height: 1.85;
+      color: var(--text-body); max-width: 390px;
+      margin-bottom: 40px;
+      opacity: 0; animation: fadeUp .7s ease .65s forwards;
+    }
+    .hero-cta {
+      display: flex; align-items: center; gap: 16px;
+      opacity: 0; animation: fadeUp .7s ease .8s forwards;
+    }
+    .btn-primary {
+      background: var(--accent); color: #0a0a0a;
+      border: none; padding: 13px 32px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      transition: opacity .25s, transform .2s, box-shadow .25s;
+    }
+    .btn-primary:hover {
+      opacity: .85; transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(232,255,71,0.22);
+    }
+    [data-theme="light"] .btn-primary { filter: brightness(0.88); }
+    .btn-ghost {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text-body); font-size: 13px; font-weight: 500;
+      text-decoration: none; letter-spacing: .5px;
+      transition: color .25s;
+    }
+    .btn-ghost .arr {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border); border-radius: 50%;
+      display: grid; place-items: center; font-size: 14px;
+      transition: border-color .25s, background .25s;
+    }
+    .btn-ghost:hover { color: var(--text-primary); }
+    .btn-ghost:hover .arr { border-color: var(--accent); background: var(--accent-soft); }
+
+    .scroll-hint {
+      position: absolute; bottom: 40px; left: 80px; z-index: 2;
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0; animation: fadeIn 1s ease 1.5s forwards;
+    }
+    .scroll-hint span {
+      font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-line {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      animation: lp 2.2s ease infinite;
+    }
+    [data-theme="light"] .scroll-line { filter: brightness(0.7); }
+    @keyframes lp { 0%,100%{width:28px;opacity:.35} 50%{width:58px;opacity:1} }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ─── STATS BAR ────────────────────────────────── */
+    .stats-bar {
+      background: var(--stat-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 80px;
+      display: flex; justify-content: center;
+      transition: background .35s;
+    }
+    .stat {
+      text-align: center; flex: 1; max-width: 220px;
+      padding: 0 20px; position: relative;
+    }
+    .stat + .stat::before {
+      content: ''; position: absolute; left: 0; top: 15%; bottom: 15%;
+      width: 1px; background: var(--border);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; font-weight: 900;
+      color: var(--text-primary); line-height: 1;
+    }
+    .stat-accent { color: var(--accent); }
+    [data-theme="light"] .stat-accent { filter: brightness(0.7); }
+    .stat-label {
+      font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--text-muted); margin-top: 5px;
+    }
+
+    /* ─── SHARED SECTION HEADER ────────────────────── */
+    .sec-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    [data-theme="light"] .sec-eyebrow { filter: brightness(0.7); }
+    .sec-eyebrow::before {
+      content: ''; width: 16px; height: 1px; background: currentColor;
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4.5vw, 50px);
+      font-weight: 900; line-height: 1.05;
+      color: var(--text-primary);
+    }
+    .sec-title em { font-style: italic; color: var(--accent); }
+    [data-theme="light"] .sec-title em { filter: brightness(0.7); }
+
+    /* ─── ABOUT ────────────────────────────────────── */
+    .about-section {
+      padding: 110px 80px;
+      background: var(--bg-2); transition: background .35s;
+    }
+    .about-inner { max-width: 1160px; margin: 0 auto; }
+    .about-hd { margin-bottom: 52px; }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 2px; border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .about-text {
+      background: var(--about-text-bg);
+      padding: 64px 56px; transition: background .35s;
+    }
+    .about-text p {
+      font-size: 14px; line-height: 1.95;
+      color: var(--about-text); margin-bottom: 22px;
+    }
+    .about-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px; font-weight: 700;
+      color: var(--about-head); margin: 10px 0 12px;
+      transition: color .35s;
+    }
+    .hl { color: var(--text-primary); font-weight: 600; }
+    .ac { color: var(--accent); font-weight: 600; }
+    [data-theme="light"] .ac { filter: brightness(0.68); }
+
+    .about-visual {
+      position: relative; overflow: hidden;
+      background: var(--bg-card); min-height: 400px;
+    }
+    .about-visual img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .about-visual:hover img { transform: scale(1.04); }
+    .about-visual::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--accent-soft), transparent 55%);
+      pointer-events: none;
+    }
+
+    /* ─── CATEGORIES ───────────────────────────────── */
+    .categories-section {
+      padding: 110px 80px;
+      background: var(--bg); transition: background .35s;
+    }
+    .categories-inner { max-width: 1160px; margin: 0 auto; }
+    .cat-hd { margin-bottom: 52px; }
+
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; border: 1px solid var(--border); overflow: hidden;
+    }
+    .cat-card {
+      background: var(--bg-card);
+      padding: 48px 30px; position: relative;
+      border-right: 1px solid var(--border);
+      overflow: hidden; transition: background .3s;
+    }
+    .cat-card:last-child { border-right: none; }
+    .cat-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--accent-soft);
+      transform: translateY(100%);
+      transition: transform .38s ease;
+    }
+    [data-theme="light"] .cat-card::after { background: rgba(160,175,0,0.06); }
+    .cat-card:hover::after { transform: translateY(0); }
+    .cat-icon { font-size: 34px; display: block; margin-bottom: 20px; position: relative; z-index: 1; }
+    .cat-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px; font-weight: 700;
+      color: var(--text-primary); margin-bottom: 8px;
+      position: relative; z-index: 1;
+    }
+    .cat-card p {
+      font-size: 13px; line-height: 1.7;
+      color: var(--text-body); position: relative; z-index: 1;
+    }
+    .cat-ghost-num {
+      position: absolute; bottom: 10px; right: 16px;
+      font-family: 'Playfair Display', serif;
+      font-size: 54px; font-weight: 900;
+      color: var(--border); line-height: 1;
+      z-index: 0; transition: color .3s;
+    }
+
+    /* ─── BRANDS ───────────────────────────────────── */
+    .brands-section {
+      padding: 110px 80px;
+      background: var(--bg-2); transition: background .35s;
+    }
+    .brands-inner { max-width: 1160px; margin: 0 auto; }
+    .brands-hd { margin-bottom: 52px; }
+
+    .brand-list {
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .brand-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card); transition: background .3s;
+    }
+    .brand-row:last-child { border-bottom: none; }
+    .brand-row.flip { direction: rtl; }
+    .brand-row.flip > * { direction: ltr; }
+    .brand-row:hover { background: var(--bg-card-2); }
+
+    .brand-info {
+      padding: 56px 50px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .brand-idx {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 14px;
+    }
+    .brand-info h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 2.5vw, 30px); font-weight: 700;
+      line-height: 1.2; color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+    .brand-info h2 strong { color: var(--accent); font-style: italic; }
+    [data-theme="light"] .brand-info h2 strong { filter: brightness(0.68); }
+    .brand-info p {
+      font-size: 13px; line-height: 1.8;
+      color: var(--text-body); max-width: 360px; margin-bottom: 26px;
+    }
+    .brand-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 18px;
+      border: 1px solid var(--border);
+      font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--text-body); width: fit-content;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .brand-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+    [data-theme="light"] .brand-pill:hover { color: #6a7a00; border-color: #a0af00; }
+
+    .brand-visual {
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px; background: var(--bg);
+      position: relative; overflow: hidden; transition: background .3s;
+    }
+    .brand-visual::before {
+      content: attr(data-brand);
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(50px, 8vw, 88px);
+      font-weight: 900; font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--border);
+      user-select: none; pointer-events: none;
+      white-space: nowrap;
+      transition: -webkit-text-stroke-color .35s;
+    }
+    .brand-visual img {
+      max-width: 80%; max-height: 210px;
+      object-fit: contain; position: relative; z-index: 1;
+      filter: drop-shadow(0 16px 36px var(--shadow));
+      transition: transform .5s ease, filter .4s;
+    }
+    .brand-row:hover .brand-visual img {
+      transform: scale(1.07) rotate(-3deg);
+    }
+
+    /* ─── TESTIMONIALS ─────────────────────────────── */
+    .testimonials-section {
+      padding: 110px 80px;
+      background: var(--bg); transition: background .35s;
+    }
+    .testimonials-inner { max-width: 1160px; margin: 0 auto; }
+    .testi-hd { margin-bottom: 52px; }
+
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .testi-card {
+      background: var(--bg-card);
+      padding: 44px 36px;
+      border-right: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .testi-card:last-child { border-right: none; }
+    .testi-card:hover { background: var(--bg-card-2); }
+    .stars {
+      font-size: 12px; letter-spacing: 4px; color: var(--accent);
+      margin-bottom: 18px;
+    }
+    [data-theme="light"] .stars { filter: brightness(0.7); }
+    .testi-card blockquote {
+      font-size: 14px; line-height: 1.85;
+      color: var(--text-body); font-style: italic;
+      margin-bottom: 26px;
+      border-left: 2px solid var(--accent);
+      padding-left: 16px;
+    }
+    [data-theme="light"] .testi-card blockquote { border-color: #9aaa00; }
+    .reviewer { display: flex; align-items: center; gap: 12px; }
+    .reviewer-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--bg-2); border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 14px;
+      color: var(--accent); flex-shrink: 0;
+    }
+    [data-theme="light"] .reviewer-avatar { color: #6a7a00; }
+    .reviewer-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .reviewer-title { font-size: 10px; letter-spacing: 1px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ─── NEWSLETTER ───────────────────────────────── */
+    .newsletter-section {
+      padding: 100px 80px; text-align: center;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background .35s;
+    }
+    .newsletter-section::before {
+      content: 'NOTIFY';
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(70px, 12vw, 150px);
+      font-weight: 900; font-style: italic;
+      color: transparent; -webkit-text-stroke: 1px var(--border);
+      white-space: nowrap; pointer-events: none; user-select: none;
+      transition: -webkit-text-stroke-color .35s;
+    }
+    .newsletter-section .sec-eyebrow { position: relative; z-index: 1; display: inline-flex; margin-bottom: 10px; }
+    .newsletter-section .sec-title { position: relative; z-index: 1; margin-bottom: 38px; }
+    .newsletter-form {
+      position: relative; z-index: 1;
+      display: flex; max-width: 440px; margin: 0 auto;
+    }
+    .newsletter-input {
+      flex: 1; padding: 14px 20px;
+      background: var(--bg-card); color: var(--text-primary);
+      border: 1px solid var(--border); border-right: none;
+      font-family: 'Outfit', sans-serif; font-size: 14px;
+      outline: none; transition: border-color .3s, background .35s;
+    }
+    .newsletter-input::placeholder { color: var(--text-muted); }
+    .newsletter-input:focus { border-color: var(--accent); }
+    [data-theme="light"] .newsletter-input:focus { border-color: #9aaa00; }
+    .newsletter-btn {
+      padding: 14px 26px;
+      background: var(--accent); color: #0a0a0a;
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      border: none; white-space: nowrap;
+      transition: opacity .25s;
+    }
+    [data-theme="light"] .newsletter-btn { filter: brightness(0.88); }
+    .newsletter-btn:hover { opacity: .85; }
+
+    /* ─── FOOTER ───────────────────────────────────── */
+    footer {
+      background: var(--bg);
+      padding: 64px 80px 36px;
+      border-top: 1px solid var(--border);
+      transition: background .35s;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 60px; margin-bottom: 52px;
+    }
+    .footer-logo { display: block; margin-bottom: 14px; }
+    .footer-brand p { font-size: 13px; color: var(--text-body); line-height: 1.75; max-width: 260px; }
+    .footer-col h4 {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 13px; color: var(--text-body);
+      text-decoration: none; transition: color .25s;
+    }
+    .footer-col ul li a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 28px; border-top: 1px solid var(--border);
+    }
+    .footer-bottom p { font-size: 11px; color: var(--text-muted); }
+    .social-links { display: flex; gap: 8px; }
+    .social-link {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-size: 14px; color: var(--text-body);
+      text-decoration: none;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    /* ─── SCROLL REVEAL ────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 1024px) {
+      .about-grid, .brand-row, .brand-row.flip { grid-template-columns: 1fr; direction: ltr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .navbar { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 70px; }
+      .hero-shoe, .hero-ring, .hero-ghost { display: none; }
+      .scroll-hint { left: 24px; }
+      .about-section,.brands-section,.categories-section,
+      .testimonials-section,.newsletter-section { padding: 70px 24px; }
+      footer { padding: 50px 24px 30px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { border-right: 1px solid var(--border); }
+      .stats-bar { padding: 22px 24px; flex-wrap: wrap; gap: 16px; justify-content: space-around; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ── NAVBAR ──────────────────────────────────── -->
+  <nav class="navbar">
+    <a href="#" class="logo">SOLE<em>Mate</em></a>
+
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#brands">Brands</a></li>
+      <li><a href="#categories">Categories</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="#" class="nav-icon" aria-label="Cart">🛒</a>
+      <a href="#" class="nav-icon" aria-label="Search">🔍</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="theme-icon sun">☀️</span>
+        <span class="theme-icon moon">🌙</span>
+      </button>
+      <img src="Ellipse 1.png" alt="Profile" class="avatar">
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-ghost">Sole</div>
+    <div class="hero-ring"></div>
+    <img src="shoe.jpg" alt="Featured Shoe" class="hero-shoe">
+
+    <div class="hero-content">
+      <div class="hero-badge">New Collection 2025</div>
+      <h4>Discover Your</h4>
+      <h1>
+        Perfect
+        <span class="outline"><span class="glow">Pair.</span></span>
+      </h1>
+      <p>Step into comfort and style with our exclusive collection. Whether you're hitting the pavement, the trails, or the dance floor — we have the perfect pair for your journey.</p>
+      <div class="hero-cta">
+        <button class="btn-primary">Shop Now</button>
+        <a href="#about" class="btn-ghost">Our Story <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── STATS ────────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num"><span class="counter" data-target="200">0</span><span class="stat-accent">+</span></div>
+      <div class="stat-label">Styles</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span class="counter" data-target="50">0</span>K<span class="stat-accent">+</span></div>
+      <div class="stat-label">Customers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span class="counter" data-target="15">0</span><span class="stat-accent">+</span></div>
+      <div class="stat-label">Brands</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4.9<span class="stat-accent">★</span></div>
+      <div class="stat-label">Rating</div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ────────────────────────────────────── -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-hd reveal">
+        <div class="sec-eyebrow">Our Identity</div>
+        <h2 class="sec-title">Who We <em>Are</em></h2>
+      </div>
+      <div class="about-grid reveal">
+        <div class="about-text">
+          <p>Welcome to <strong class="hl">SOLE<span class="ac">MATE</span></strong> — where your journey to finding the perfect pair begins. We believe shoes are more than just an accessory; they're a statement of style, a symbol of comfort, and a testament to craftsmanship.</p>
+          <h3>Our Story</h3>
+          <p>Founded in 2024, <strong class="hl">SOLEMATE</strong> started as a small boutique with a big dream: to bring high-quality, stylish footwear to people from all walks of life. We've grown into a trusted name built on excellence.</p>
+          <h3>Visit Us</h3>
+          <p>Explore our collection online or in-store to experience the <strong class="hl">SOLEMATE</strong> difference. Where style meets comfort, and quality meets craftsmanship.</p>
+        </div>
+        <div class="about-visual">
+          <img src="shoe1.png" alt="Shoe Display">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORIES ──────────────────────────────── -->
+  <section class="categories-section" id="categories">
+    <div class="categories-inner">
+      <div class="cat-hd reveal">
+        <div class="sec-eyebrow">Browse</div>
+        <h2 class="sec-title">Shop by <em>Category</em></h2>
+      </div>
+      <div class="cat-grid reveal">
+        <div class="cat-card">
+          <span class="cat-icon">👟</span>
+          <h3>Sneakers</h3>
+          <p>Street-ready styles built for everyday flex.</p>
+          <div class="cat-ghost-num">01</div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-icon">🏃</span>
+          <h3>Running</h3>
+          <p>Performance-engineered for every stride.</p>
+          <div class="cat-ghost-num">02</div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-icon">⛰️</span>
+          <h3>Trail</h3>
+          <p>Rugged soles built to conquer any terrain.</p>
+          <div class="cat-ghost-num">03</div>
+        </div>
+        <div class="cat-card">
+          <span class="cat-icon">✨</span>
+          <h3>Lifestyle</h3>
+          <p>Effortless elegance from morning to night.</p>
+          <div class="cat-ghost-num">04</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BRANDS ───────────────────────────────────── -->
+  <section class="brands-section" id="brands">
+    <div class="brands-inner">
+      <div class="brands-hd reveal">
+        <div class="sec-eyebrow">Partners</div>
+        <h2 class="sec-title">Premium <em>Brands</em></h2>
+      </div>
+      <div class="brand-list reveal">
+        <div class="brand-row">
+          <div class="brand-info">
+            <div class="brand-idx">Brand — 01</div>
+            <h2>Just Do It with <strong>Nike</strong></h2>
+            <p>Discover the perfect pair to fuel your passion. Step into innovation and achieve greatness.</p>
+            <span class="brand-pill">Shop Nike →</span>
+          </div>
+          <div class="brand-visual" data-brand="NIKE">
+            <img src="imgggs.png" alt="Nike Shoe">
+          </div>
+        </div>
+        <div class="brand-row flip">
+          <div class="brand-info">
+            <div class="brand-idx">Brand — 02</div>
+            <h2>Step into Comfort with <strong>Skechers</strong></h2>
+            <p>Find the perfect pair that fits your lifestyle. Experience the comfort only Skechers delivers.</p>
+            <span class="brand-pill">Shop Skechers →</span>
+          </div>
+          <div class="brand-visual" data-brand="SKECHERS">
+            <img src="shoe1 copy.png" alt="Skechers Shoe">
+          </div>
+        </div>
+        <div class="brand-row">
+          <div class="brand-info">
+            <div class="brand-idx">Brand — 03</div>
+            <h2>Step Up with <strong>Puma</strong></h2>
+            <p>Find the perfect pair to elevate your performance and personal style.</p>
+            <span class="brand-pill">Shop Puma →</span>
+          </div>
+          <div class="brand-visual" data-brand="PUMA">
+            <img src="shoe2.png" alt="Puma Shoe">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ──────────────────────────────── -->
+  <section class="testimonials-section">
+    <div class="testimonials-inner">
+      <div class="testi-hd reveal">
+        <div class="sec-eyebrow">Reviews</div>
+        <h2 class="sec-title">What Customers <em>Say</em></h2>
+      </div>
+      <div class="testi-grid reveal">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Absolutely love my Nikes from SoleMate. The quality is unmatched and they look even better in person. Fast delivery and amazing packaging!"</blockquote>
+          <div class="reviewer">
+            <div class="reviewer-avatar">A</div>
+            <div>
+              <div class="reviewer-name">Alex Rivera</div>
+              <div class="reviewer-title">Verified Buyer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"SoleMate has the best curation of brands. Found my perfect trail shoes after years of searching. The customer service was incredibly helpful."</blockquote>
+          <div class="reviewer">
+            <div class="reviewer-avatar">J</div>
+            <div>
+              <div class="reviewer-name">Jamie Chen</div>
+              <div class="reviewer-title">Trail Runner</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"My Skechers are the most comfortable shoes I've ever worn. SoleMate made it so easy to find the right size and style. Will definitely order again!"</blockquote>
+          <div class="reviewer">
+            <div class="reviewer-avatar">M</div>
+            <div>
+              <div class="reviewer-name">Morgan Lee</div>
+              <div class="reviewer-title">Lifestyle Shopper</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NEWSLETTER ────────────────────────────────── -->
+  <section class="newsletter-section">
+    <div class="sec-eyebrow">Stay Connected</div>
+    <h2 class="sec-title">Get Exclusive <em>Deals</em></h2>
+    <div class="newsletter-form reveal">
+      <input class="newsletter-input" type="email" placeholder="Your email address">
+      <button class="newsletter-btn">Subscribe</button>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────── -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo footer-logo">SOLE<em>Mate</em></a>
+        <p>Your destination for premium footwear. Style, comfort, and quality — all in one place.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Sneakers</a></li>
+          <li><a href="#">Running</a></li>
+          <li><a href="#">Trail</a></li>
+          <li><a href="#">Lifestyle</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Brands</h4>
+        <ul>
+          <li><a href="#">Nike</a></li>
+          <li><a href="#">Skechers</a></li>
+          <li><a href="#">Puma</a></li>
+          <li><a href="#">Adidas</a></li>
+          <li><a href="#">New Balance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 SOLEMate. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" aria-label="Instagram">📷</a>
+        <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+        <a href="#" class="social-link" aria-label="TikTok">🎵</a>
+        <a href="#" class="social-link" aria-label="Facebook">📘</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Theme toggle (persists via localStorage) ── */
+    const html = document.documentElement;
+    const btn  = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('sm-theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+
+    btn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('sm-theme', next);
+    });
+
+    /* ── Smooth cursor with lag ─────────────────── */
+    const cur  = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animCursor() {
+      cur.style.left  = mx + 'px'; cur.style.top  = my + 'px';
+      rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+
+    /* ── Scroll reveal ──────────────────────────── */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 55);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* ── Animated counters ──────────────────────── */
+    const cObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target, end = +el.dataset.target;
+        let v = 0;
+        const t = setInterval(() => {
+          v = Math.min(v + end / 55, end);
+          el.textContent = Math.round(v);
+          if (v >= end) clearInterval(t);
+        }, 18);
+        cObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(c => cObs.observe(c));
+
+    /* ── Active nav on scroll ───────────────────── */
+    const sections = document.querySelectorAll('section[id]');
+    const navAs    = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+      navAs.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + cur || (!cur && a.getAttribute('href') === '#'));
+      });
+    });
+  </script>
+</body>
+</html>

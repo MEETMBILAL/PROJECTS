@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComixHub - Your Ultimate Comics Platform</title>
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='blue' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 6 4 14'/><path d='M12 6v14'/><path d='M8 8v12'/><path d='M4 4v16'/></svg>"
+        type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #6F2598;
+            --primary-dark: #5a1e7a;
+            --secondary-color: #ff4757;
+            --dark-bg: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --text-light: #f8f9fa;
+            --text-gray: #adb5bd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .hero-carousel {
+            height: 85vh;
+            max-height: 800px;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 15, 26, 0.95) 0%, rgba(15, 15, 26, 0.7) 30%, rgba(15, 15, 26, 0.4) 60%, transparent 100%);
+        }
+
+        .carousel-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .genre-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .genre-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .carousel-control:hover {
+            background: var(--primary-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 2rem;
+        }
+
+        .carousel-next {
+            right: 2rem;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.75rem;
+            z-index: 20;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: var(--primary-color);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .comic-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            height: 100%;
+        }
+
+        .comic-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(111, 37, 152, 0.3);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .comic-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-ongoing {
+            background: rgba(40, 167, 69, 0.2);
+            color: #51cf66;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .status-completed {
+            background: rgba(108, 117, 125, 0.2);
+            color: #adb5bd;
+            border: 1px solid rgba(108, 117, 125, 0.3);
+        }
+
+        .lang-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .infinite-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            animation: scroll 60s linear infinite;
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #6F2598, #ff4757);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #6F2598, #ff4757);
+            border-radius: 2px;
+        }
+
+        .footer {
+            background: #0a0a14;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-link {
+            color: var(--text-gray);
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--dark-bg);
+            z-index: 1001;
+            transition: right 0.4s ease;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(111, 37, 152, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-carousel {
+                height: 70vh;
+            }
+
+            .carousel-content {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-carousel {
+                height: 60vh;
+                min-height: 400px;
+            }
+
+            .carousel-content {
+                padding: 1.5rem;
+            }
+
+            .carousel-title {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+            }
+
+            .carousel-control {
+                width: 40px;
+                height: 40px;
+            }
+
+            .carousel-prev {
+                left: 1rem;
+            }
+
+            .carousel-next {
+                right: 1rem;
+            }
+
+            .grid-cols-2 {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-carousel {
+                height: 50vh;
+            }
+
+            .carousel-content {
+                padding: 1rem;
+            }
+
+            .genre-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .mobile-menu {
+                width: 100%;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6F2598, #ff4757);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 flex items-center justify-center bg-white rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#6F2598"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m16 6 4 14" />
+                            <path d="M12 6v14" />
+                            <path d="M8 8v12" />
+                            <path d="M4 4v16" />
+                        </svg>
+                    </div>
+                    <a href="index.html" class="text-2xl font-bold text-white">ComixHub</a>
+                </div>
+
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-white hover:text-purple-200 font-medium transition">Home</a>
+                    <a href="comic.html" class="text-white hover:text-purple-200 font-medium transition">Comics</a>
+                    <a href="bookmark.html"
+                        class="text-white hover:text-purple-200 font-medium transition">Bookmarks</a>
+                    <a href="recruitment.html"
+                        class="text-white hover:text-purple-200 font-medium transition">Recruitment</a>
+                </nav>
+
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:block relative">
+                        <input type="text" placeholder="Search comics..."
+                            class="search-input text-white pl-10 pr-4 py-2 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-300"></i>
+                    </div>
+
+                    <a href="login.html"
+                        class="glass-effect px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                        <i class="fas fa-user mr-2"></i>
+                        <span class="hidden sm:inline">Login</span>
+                    </a>
+
+                    <button id="mobileMenuToggle" class="md:hidden text-white text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="menuOverlay" class="menu-overlay"></div>
+    <div id="mobileMenu" class="mobile-menu">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 flex items-center justify-center bg-purple-600 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m16 6 4 14" />
+                        <path d="M12 6v14" />
+                        <path d="M8 8v12" />
+                        <path d="M4 4v16" />
+                    </svg>
+                </div>
+                <span class="text-xl font-bold text-white">ComixHub</span>
+            </div>
+            <button id="closeMenu" class="text-2xl text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="mb-6">
+            <input type="text" placeholder="Search comics..."
+                class="w-full bg-gray-800 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+        </div>
+
+        <nav class="space-y-4">
+            <a href="index.html" class="block text-white hover:text-purple-300 font-medium py-2 text-lg">Home</a>
+            <a href="comic.html" class="block text-white hover:text-purple-300 font-medium py-2 text-lg">Comics</a>
+            <a href="bookmark.html"
+                class="block text-white hover:text-purple-300 font-medium py-2 text-lg">Bookmarks</a>
+            <a href="recruitment.html"
+                class="block text-white hover:text-purple-300 font-medium py-2 text-lg">Recruitment</a>
+            <a href="login.html" class="block text-white hover:text-purple-300 font-medium py-2 text-lg">Login</a>
+        </nav>
+    </div>
+
+    <section class="hero-carousel">
+        <div id="carouselSlides">
+        </div>
+
+        <button class="carousel-control carousel-prev" id="prevBtn">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-control carousel-next" id="nextBtn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="carousel-indicators" id="carouselIndicators"></div>
+    </section>
+
+    <section class="py-16 px-4 md:px-8">
+        <div class="container mx-auto">
+            <h2 class="section-title text-center">Latest Manhwas</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="comicsGrid">
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="comic.html"
+                    class="inline-flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+                    <span>View All Comics</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 md:px-8">
+            <h2 class="section-title">Popular Web Novels</h2>
+            <p class="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+                Top-tier Korean, Chinese & other web novels that became legendary manhwa adaptations
+            </p>
+
+            <div class="infinite-carousel">
+                <div class="carousel-track" id="novelsCarousel">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer py-16">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 flex items-center justify-center bg-purple-600 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m16 6 4 14" />
+                                <path d="M12 6v14" />
+                                <path d="M8 8v12" />
+                                <path d="M4 4v16" />
+                            </svg>
+                        </div>
+                        <span class="text-2xl font-bold text-white">ComixHub</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Your ultimate hub for manhwa, manga, and comics. Discover trending series and immersive
+                        storytelling.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Explore</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link">Trending</a></li>
+                        <li><a href="#" class="footer-link">New Releases</a></li>
+                        <li><a href="#" class="footer-link">Top Rated</a></li>
+                        <li><a href="#" class="footer-link">Genres</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Community</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link">Reader Reviews</a></li>
+                        <li><a href="#" class="footer-link">Discussion Boards</a></li>
+                        <li><a href="#" class="footer-link">Recommendations</a></li>
+                        <li><a href="#" class="footer-link">Creator Spotlights</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link">Terms of Service</a></li>
+                        <li><a href="#" class="footer-link">Content Guidelines</a></li>
+                        <li><a href="#" class="footer-link">DMCA</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 ComixHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        const carouselSlides = [
+            {
+                title: "Omniscient Reader's Viewpoint",
+                image: "https://cdn.flamecomics.xyz/uploads/images/carousel/carousel-1762513823920.webp",
+                genres: ["Action", "Adventure", "Fantasy", "Survival"]
+            },
+            {
+                title: "Solo Leveling",
+                image: "https://cdn.flamecomics.xyz/uploads/images/carousel/carousel-1762514770958.webp",
+                genres: ["Action", "Adventure", "Fantasy", "Shounen"]
+            },
+            {
+                title: "Jungle Juice",
+                image: "https://cdn.flamecomics.xyz/uploads/images/carousel/carousel-1762514806978.webp",
+                genres: ["Action", "Adventure", "Fantasy", "Supernatural"]
+            },
+            {
+                title: "The Beginning After The End",
+                image: "https://readermc.org/images/thumbnails/The%20Beginning%20After%20the%20End.jpg",
+                genres: ["Fantasy", "Adventure", "Reincarnation"]
+            }
+        ];
+
+        const carouselContainer = document.getElementById('carouselSlides');
+        const indicatorsContainer = document.getElementById('carouselIndicators');
+        let currentSlide = 0;
+        let slideInterval;
+
+        carouselSlides.forEach((slide, index) => {
+            const slideElement = document.createElement('div');
+            slideElement.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+            slideElement.style.backgroundImage = `url('${slide.image}')`;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'carousel-overlay';
+
+            const content = document.createElement('div');
+            content.className = 'carousel-content';
+
+            const title = document.createElement('h1');
+            title.className = 'carousel-title';
+            title.textContent = slide.title;
+
+            const genres = document.createElement('div');
+            genres.className = 'flex flex-wrap gap-2 mt-4';
+
+            slide.genres.forEach(genre => {
+                const badge = document.createElement('span');
+                badge.className = 'genre-badge';
+                badge.textContent = genre;
+                genres.appendChild(badge);
+            });
+
+            content.appendChild(title);
+            content.appendChild(genres);
+            slideElement.appendChild(overlay);
+            slideElement.appendChild(content);
+            carouselContainer.appendChild(slideElement);
+
+            const indicator = document.createElement('div');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.addEventListener('click', () => goToSlide(index));
+            indicatorsContainer.appendChild(indicator);
+        });
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
+
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+
+            currentSlide = (index + slides.length) % slides.length;
+
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+
+            resetInterval();
+        }
+
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
+
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+
+        carouselContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        carouselContainer.addEventListener('mouseleave', startInterval);
+
+        startInterval();
+
+        const comicsData = [
+            {
+                title: "Omniscient Reader's Viewpoint",
+                image: "https://readermc.org/images/thumbnails/Omniscient%20Reader's%20Viewpoint.webp",
+                chapters: [
+                    { number: 214, date: "2026-01-25" },
+                    { number: 213, date: "2026-01-18" },
+                    { number: 212, date: "2026-01-11" }
+                ],
+                status: "ongoing"
+            },
+            {
+                title: "The Beginning After The End",
+                image: "https://readermc.org/images/thumbnails/The%20Beginning%20After%20the%20End.jpg",
+                chapters: [
+                    { number: 186, date: "2026-01-25" },
+                    { number: 185, date: "2026-01-18" },
+                    { number: 184, date: "2026-01-11" }
+                ],
+                status: "ongoing"
+            },
+            {
+                title: "Solo Leveling",
+                image: "https://flamecomics.xyz/_next/image?url=https%3A%2F%2Fcdn.flamecomics.xyz%2Fuploads%2Fimages%2Fseries%2F1%2Fthumbnail.png%3F%2F1744370554&w=1920&q=100",
+                chapters: [
+                    { number: 200, date: "2026-01-25" },
+                    { number: 199, date: "2026-01-18" },
+                    { number: 198, date: "2026-01-11" }
+                ],
+                status: "completed"
+            },
+            {
+                title: "The Greatest Estate Developer",
+                image: "https://readermc.org/images/thumbnails/The%20Greatest%20Estate%20Developer.jpg",
+                chapters: [
+                    { number: 152, date: "2026-01-25" },
+                    { number: 151, date: "2026-01-20" },
+                    { number: 150, date: "2026-01-15" }
+                ],
+                status: "ongoing"
+            }
+        ];
+
+        const comicsGrid = document.getElementById('comicsGrid');
+
+        comicsData.forEach(comic => {
+            const card = document.createElement('div');
+            card.className = 'comic-card hover-lift';
+            card.setAttribute('data-aos', 'fade-up');
+
+            card.innerHTML = `
+                <div class="relative">
+                    <img src="${comic.image}" alt="${comic.title}" class="card-image">
+                    <span class="lang-badge">KR</span>
+                    <span class="absolute top-4 right-4 status-badge ${comic.status === 'ongoing' ? 'status-ongoing' : 'status-completed'}">
+                        ${comic.status.charAt(0).toUpperCase() + comic.status.slice(1)}
+                    </span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold mb-3 line-clamp-1">${comic.title}</h3>
+                    <div class="space-y-2">
+                        ${comic.chapters.map(chapter => `
+                            <div class="flex justify-between text-gray-400 text-sm">
+                                <span>Chapter ${chapter.number}</span>
+                                <span>${chapter.date}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            comicsGrid.appendChild(card);
+        });
+
+        const novelsData = [
+            {
+                title: "Omniscient Reader's Viewpoint",
+                likes: "18.9k",
+                lang: "KR",
+                image: "https://readermc.org/images/thumbnails/Omniscient%20Reader's%20Viewpoint.webp"
+            },
+            {
+                title: "Solo Leveling",
+                likes: "52.4k",
+                lang: "KR",
+                image: "https://flamecomics.xyz/_next/image?url=https%3A%2F%2Fcdn.flamecomics.xyz%2Fuploads%2Fimages%2Fseries%2F1%2Fthumbnail.png%3F%2F1744370554&w=1920&q=100"
+            },
+            {
+                title: "The Beginning After The End",
+                likes: "34.7k",
+                lang: "EN",
+                image: "https://readermc.org/images/thumbnails/The%20Beginning%20After%20the%20End.jpg"
+            },
+            {
+                title: "Tower of God",
+                likes: "27.1k",
+                lang: "KR",
+                image: "https://i.pinimg.com/736x/ba/2c/8a/ba2c8a8e9f80c22ab2a904464e6f1232.jpg"
+            },
+            {
+                title: "Trash of the Count's Family",
+                likes: "22.8k",
+                lang: "KR",
+                image: "https://i.pinimg.com/736x/40/b9/7c/40b97c4f6555f10f459a8c67185b546b.jpg"
+            },
+            {
+                title: "Lord of the Mysteries",
+                likes: "31.2k",
+                lang: "CN",
+                image: "https://i.pinimg.com/736x/1a/9e/08/1a9e08787f285f58878d67ea83b45d42.jpg"
+            },
+            {
+                title: "SSS-Class Suicide Hunter",
+                likes: "29.5k",
+                lang: "KR",
+                image: "https://i.pinimg.com/736x/2b/21/cd/2b21cd1a21a0f833822438e784d232ac.jpg"
+            },
+            {
+                title: "Shadow Slave",
+                likes: "42.6k",
+                lang: "EN",
+                image: "https://i.pinimg.com/1200x/d8/0a/1b/d80a1b296ee1da1649cb655a17a7c14b.jpg"
+            }
+        ];
+
+
+        const novelsCarousel = document.getElementById('novelsCarousel');
+        const carouselItems = [...novelsData, ...novelsData];
+
+        carouselItems.forEach(novel => {
+            const item = document.createElement('div');
+            item.className = 'flex-none w-64';
+
+            item.innerHTML = `
+    <div class="comic-card h-full">
+        <div class="relative">
+            <img src="${novel.image}" alt="${novel.title}" class="card-image">
+            <span class="lang-badge">${novel.lang}</span>
+        </div>
+        <div class="p-5">
+            <h3 class="font-bold text-lg mb-3 line-clamp-2">${novel.title}</h3>
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2 text-red-400">
+                    <i class="fas fa-heart"></i>
+                    <span class="text-sm font-medium">${novel.likes}</span>
+                </div>
+                <span class="status-badge status-ongoing">Ongoing</span>
+            </div>
+        </div>
+    </div>
+`;
+
+            novelsCarousel.appendChild(item);
+        });
+
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        alert(`Searching for: ${query}`);
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.comic-card')) {
+                const card = e.target.closest('.comic-card');
+                const title = card.querySelector('h3')?.textContent;
+                if (title) {
+                    console.log(`Added ${title} to bookmarks`);
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+                    notification.textContent = `Added ${title} to bookmarks`;
+                    document.body.appendChild(notification);
+
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

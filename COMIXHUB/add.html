@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='blue' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 6 4 14'/><path d='M12 6v14'/><path d='M8 8v12'/><path d='M4 4v16'/></svg>"
+    type="image/svg+xml">
+  <title>Add Manhwa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #0e0d13;
+      color: #f5f5f5;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .6);
+      transition: .3s
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        font-size: 14px;
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 1rem !important;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: linear-gradient(to right, rgba(107, 33, 168, 0.9), rgba(126, 34, 206, 0.9)) !important;
+      }
+
+      header span.font-bold.text-xl {
+        font-size: 1.1rem;
+        text-align: center;
+        flex-grow: 1;
+      }
+
+      header a.text-white {
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      main {
+        padding: 1rem !important;
+        max-width: 100% !important;
+      }
+
+      #grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0.5rem;
+      }
+
+      .card {
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .card img {
+        height: 280px !important;
+        object-fit: cover;
+      }
+
+      .card .p-4 {
+        padding: 1rem;
+      }
+
+      .card h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .card p.text-gray-400 {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .card button {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        width: 100%;
+      }
+
+      footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin-top: 2rem;
+      }
+
+      footer .max-w-7xl {
+        max-width: 100%;
+      }
+
+      footer .grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem;
+        text-align: center;
+        padding-bottom: 2rem;
+      }
+
+      footer .grid>div {
+        margin-bottom: 1.5rem;
+      }
+
+      footer .flex {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      footer .flex.gap-6 {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      header {
+        padding: 0.8rem 1rem !important;
+      }
+
+      header span.font-bold.text-xl {
+        font-size: 1rem;
+      }
+
+      header a.text-white {
+        font-size: 0.85rem;
+      }
+
+      main {
+        padding: 0.75rem !important;
+      }
+
+      #grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.8rem;
+      }
+
+      .card img {
+        height: 230px !important;
+      }
+
+      .card .p-4 {
+        padding: 0.75rem;
+      }
+
+      .card h2 {
+        font-size: 1.1rem;
+      }
+
+      .card button {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+      }
+
+      footer {
+        padding-top: 2rem;
+        padding-bottom: 1.5rem;
+      }
+
+      footer h2.text-2xl {
+        font-size: 1.5rem;
+      }
+
+      footer h3.text-lg {
+        font-size: 1.1rem;
+      }
+
+      footer .text-sm {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      main {
+        padding: 2rem !important;
+      }
+
+      #grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 1.5rem;
+      }
+
+      .card img {
+        height: 320px !important;
+      }
+
+      .card h2 {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+      main {
+        padding: 1rem !important;
+      }
+
+      #grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem;
+      }
+
+      .card img {
+        height: 200px !important;
+      }
+
+      .card .p-4 {
+        padding: 0.6rem;
+      }
+
+      .card h2 {
+        font-size: 1rem;
+      }
+
+      .card p.text-gray-400 {
+        font-size: 0.8rem;
+      }
+
+      .card button {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      header {
+        padding: 0.5rem !important;
+      }
+
+      header span.font-bold.text-xl {
+        font-size: 1rem;
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .card:hover {
+        transform: none !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .card:active {
+        transform: scale(0.98) !important;
+        transition: transform 0.1s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      }
+
+      button:hover {
+        transform: none !important;
+      }
+
+      button:active {
+        transform: scale(0.95) !important;
+        opacity: 0.9;
+      }
+
+      .card {
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .card button:active {
+        transform: scale(0.97);
+      }
+    }
+
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+      .card img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+    }
+
+    @supports (padding: max(0px)) {
+      body {
+        padding-left: min(0px, env(safe-area-inset-left));
+        padding-right: min(0px, env(safe-area-inset-right));
+        padding-bottom: min(0px, env(safe-area-inset-bottom));
+      }
+
+      main {
+        padding-left: max(1rem, env(safe-area-inset-left)) !important;
+        padding-right: max(1rem, env(safe-area-inset-right)) !important;
+      }
+
+      footer {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+      }
+
+      header {
+        padding-left: max(1rem, env(safe-area-inset-left)) !important;
+        padding-right: max(1rem, env(safe-area-inset-right)) !important;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .card {
+        background: #1c1b23;
+      }
+
+      .card button.bg-purple-700 {
+        background: #7c3aed;
+      }
+
+      .card button.bg-purple-700:hover {
+        background: #6d28d9;
+      }
+
+      .card button.bg-gray-600 {
+        background: #4b5563;
+      }
+    }
+
+    @media print {
+
+      header,
+      footer,
+      button {
+        display: none !important;
+      }
+
+      #grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem;
+      }
+
+      .card {
+        break-inside: avoid;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        background: white !important;
+        color: black !important;
+      }
+
+      .card img {
+        height: 200px !important;
+        filter: grayscale(100%);
+      }
+
+      .card h2 {
+        color: black !important;
+      }
+
+      .card p.text-gray-400 {
+        color: #666 !important;
+      }
+
+      body {
+        background: white !important;
+        color: black !important;
+      }
+
+      main {
+        padding: 0 !important;
+      }
+    }
+
+    @media screen and (min-width: 1440px) {
+      main {
+        max-width: 1400px !important;
+      }
+
+      #grid {
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 2rem;
+      }
+
+      .card img {
+        height: 380px !important;
+      }
+    }
+
+    @media screen and (min-width: 1025px) and (max-width: 1439px) {
+      #grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1.8rem;
+      }
+
+      .card img {
+        height: 350px !important;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .card-skeleton {
+        height: 400px;
+        background: linear-gradient(90deg, #1c1b23 25%, #25232e 50%, #1c1b23 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        border-radius: 12px;
+      }
+
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+
+        100% {
+          background-position: -200% 0;
+        }
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        grid-column: 1/-1;
+      }
+
+      .empty-state h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      .empty-state p {
+        color: #a0a0a0;
+        margin-bottom: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="bg-gradient-to-r from-purple-800 to-purple-600 p-4 flex justify-between items-center">
+    <a href="bookmark.html" class="text-white">← Back</a>
+    <span class="font-bold text-xl">Add Manhwa</span>
+  </header>
+
+  <main class="max-w-[1220px] mx-auto p-6">
+    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </main>
+
+  <script>
+    const grid = document.getElementById("grid");
+    let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const MANHWAS = [
+      { title: "Solo Leveling", genre: "Action", img: "https://i.pinimg.com/1200x/4b/bb/7b/4bbb7b3e6fa36a8b2e4c2c02fb48801e.jpg" },
+      { title: "The God of High School", genre: "Action", img: "https://m.media-amazon.com/images/I/91EKosxJIdL._AC_UF1000,1000_QL80_.jpg" },
+      { title: "The World After the Fall", genre: "Fantasy", img: "https://i.pinimg.com/736x/4c/1d/27/4c1d2735c346553eba727027af4e680d.jpg" },
+      { title: "I Regressed as the Duke", genre: "Fantasy", img: "https://i.pinimg.com/736x/00/ca/51/00ca51414a5a1ebd810ba0ff09d3c4cb.jpg" },
+      { title: "My Dad is Too Strong", genre: "Comedy", img: "https://i.pinimg.com/736x/2c/9f/44/2c9f44afb2b8761309a8d16fccf478ad.jpg" },
+      { title: "I'm Not That Kind of Talent", genre: "Fantasy", img: "https://i.pinimg.com/736x/a6/ed/2f/a6ed2f8f8dcb3fcee1e0a9d54ad5e306.jpg" },
+      { title: "Revenge of the Iron-Blooded Sword Hound", genre: "Fantasy", img: "https://i.pinimg.com/736x/ca/6a/2b/ca6a2b6d10a71bbfd733848834c3d3fc.jpg" },
+      { title: "OMNISCIENTREADER", genre: "Fantasy", img: "https://i.pinimg.com/736x/ea/c5/8f/eac58f198545ffdb6f002647f971ba78.jpg" },
+      { title: "SWORDMASTERYOUNGESTSON", genre: "Fantasy", img: "https://i.pinimg.com/736x/30/7f/34/307f34d07a75402ab7fbf9c986f417fa.jpg" },
+      { title: "Weak Hero", genre: "Action", img: "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1605720815i/55927169.jpg" },
+      { title: "Mercenary Enrollment", genre: "Action", img: "https://i.pinimg.com/736x/54/20/98/542098e22be1e779c859c3468e0c7fc9.jpg" },
+      { title: "Hero Killer", genre: "Action", img: "https://i.pinimg.com/736x/34/0c/75/340c7510e40397e181a382a26296525c.jpg" }, { title: "The Beginning After The End", genre: "Fantasy", img: "https://i.pinimg.com/736x/69/c2/db/69c2db926d049090f7788cc1dbc0ed9b.jpg" },
+      { title: "Legend of the Northern Blade", genre: "Martial Arts", img: "https://i.pinimg.com/1200x/af/ef/8b/afef8ba12b87dc3110a15ec2b7ee3328.jpg" },
+      { title: "The Breaker", genre: "Martial Arts", img: "https://i.pinimg.com/736x/08/f2/74/08f27476a01a8c662aba0e4c0803bf93.jpg" },
+      { title: "Return of the Mount Hua Sect", genre: "Martial Arts", img: "https://i.pinimg.com/736x/c2/88/71/c288718c46f815060d8cfff4d479e4d1.jpg" },
+      { title: "Kill the Hero", genre: "Action", img: "https://i.pinimg.com/736x/61/80/ab/6180ab3c12719847e241de77ed92e8d1.jpg" },
+      { title: "Villain To Kill", genre: "Action", img: "https://i.pinimg.com/736x/a6/00/bc/a600bc2199a6ea9e8f926a16aabf7c08.jpg" },
+      { title: "Lookism", genre: "Drama", img: "https://i.pinimg.com/736x/65/16/2a/65162ad9d7a91b9a9265bb4ff4c187f0.jpg" },
+      { title: "Wind Breaker", genre: "Sports", img: "https://i.pinimg.com/736x/6e/3b/7a/6e3b7a27af4a9754c592bb356e395482.jpg" },
+      { title: "Tower of God", genre: "Fantasy", img: "https://i.pinimg.com/1200x/52/66/c9/5266c9d9b961f38f8ddbfe1c090ae142.jpg" },
+      { title: "Chronicles of the Heavenly Demon", genre: "Martial Arts", img: "https://i.pinimg.com/1200x/32/a8/10/32a81013c1132ee6626b9e3dc88a55d4.jpg" },
+      { title: "The Return of the Crazy Demon", genre: "Martial Arts", img: "https://i.pinimg.com/736x/11/3f/57/113f575f8cde7e46c53ce1cdc6f8fc05.jpg" },
+      { title: "Doctor's Rebirth", genre: "Martial Arts", img: "https://i.pinimg.com/736x/77/21/c3/7721c387c48a86c4f9466492f37c593a.jpg" },
+      { title: "Reaper of the Drifting Moon", genre: "Martial Arts", img: "https://i.pinimg.com/1200x/16/7d/48/167d488d609b3ea612584af613e097ca.jpg" },
+      { title: "SSS-Class Suicide Hunter", genre: "Fantasy", img: "https://i.pinimg.com/1200x/a5/09/5c/a5095c85339df99cb63161dd0d27275e.jpg" },
+      { title: "Solo Max-Level Newbie", genre: "Game", img: "https://i.pinimg.com/1200x/65/1e/0c/651e0c36beabc6890f76ff981eb9281b.jpg" },
+      { title: "Overgeared", genre: "Game", img: "https://i.pinimg.com/736x/9c/be/5f/9cbe5f1ff4b27c07f9360633994fa629.jpg" },
+      { title: "The Novel's Extra", genre: "Game", img: "https://i.pinimg.com/736x/aa/42/1f/aa421f92c979cffa134c1a54002d7ab7.jpg" },
+      { title: "Murim Login", genre: "Game", img: "https://i.pinimg.com/736x/54/b2/5d/54b25d1a04a4c6f785a4de902f951644.jpg" },
+      { title: "Second Life Ranker", genre: "Fantasy", img: "https://i.pinimg.com/1200x/d8/0a/1b/d80a1b296ee1da1649cb655a17a7c14b.jpg" },
+      { title: "The Player Who Can't Level Up", genre: "Game", img: "https://i.pinimg.com/1200x/85/25/17/852517d95c404cd01d2472dae027a6b7.jpg" },
+      { title: "Surviving the Game as a Barbarian", genre: "Game", img: "https://i.pinimg.com/736x/63/d6/a8/63d6a8d10d42055991a08873730dfd1d.jpg" },
+      { title: "Trash of the Count's Family", genre: "Fantasy", img: "https://i.pinimg.com/736x/44/4f/f3/444ff36c4350669944ed396a421a932e.jpg" },
+      { title: "Reincarnation of the Suicidal Battle God", genre: "Action", img: "https://i.pinimg.com/1200x/1a/cc/de/1accdec27b22afc864b3738f3ab8d23e.jpg" },
+      { title: "Return of the Disaster-Class Hero", genre: "Action", img: "https://i.pinimg.com/736x/bc/39/85/bc3985051414a6980298a156f6f7c206.jpg" },
+      { title: "Star-Embracing Swordmaster", genre: "Fantasy", img: "https://i.pinimg.com/736x/35/3a/63/353a6373f28a634c16d8e065c5c5bf49.jpg" },
+      { title: "Dragon-Devouring Mage", genre: "Fantasy", img: "https://i.pinimg.com/736x/34/3b/67/343b67c05dae44d7f7dcf33b768f5884.jpg" },
+      { title: "Return of the Frozen Player", genre: "Fantasy", img: "https://i.pinimg.com/736x/68/be/42/68be42e7ce4065ba923bce7aa889e882.jpg" },
+      { title: "The Max Level Hero Has Returned", genre: "Isekai", img: "https://i.pinimg.com/736x/ef/32/fc/ef32fcb288e4d58409a6f639cf0683e4.jpg" },
+      { title: "Returner's Magic Should Return", genre: "Magic", img: "https://i.pinimg.com/736x/a1/34/ee/a134eeaf6208114903fa3f6f39b245d7.jpg" },
+      { title: "Infinite Mage", genre: "Magic", img: "https://i.pinimg.com/736x/f1/15/ee/f115eec6887f87c8cc41050766dc5e09.jpg" },
+      { title: "The Dark Magician Transmigrates After 66666 Years", genre: "Dark Fantasy", img: "https://i.pinimg.com/736x/65/ea/28/65ea28bada8870818a08c37176b46e09.jpg" },
+      { title: "Eleceed", genre: "Superpower", img: "https://i.pinimg.com/736x/52/2f/8a/522f8aee52ab662567f4917587f2f980.jpg" },
+      { title: "FFF-Class Trashero", genre: "Comedy", img: "https://i.pinimg.com/736x/1b/28/c0/1b28c0df5cb34a66e9514cb8f726074c.jpg" },
+      { title: "The Boxer", genre: "Sports", img: "https://i.pinimg.com/736x/aa/7b/48/aa7b482c2279718f577d8a14705cfbfa.jpg" },
+      { title: "My School Life Pretending To Be a Worthless Person", genre: "Action", img: "https://i.pinimg.com/736x/ed/20/95/ed2095f11c3b1c3555243636fcd74e10.jpg" },
+      { title: "Tomb Raider King", genre: "Adventure", img: "https://i.pinimg.com/1200x/09/d3/5d/09d35ddc0f319c3b133e42d75255c120.jpg" },
+      { title: "Nano Machine", genre: "Sci-Fi", img: "https://i.pinimg.com/736x/fd/69/55/fd6955187a8fb9120e1d880bc006400c.jpg" },
+      { title: "The Player Who Returned After 10,000 Years", genre: "Fantasy", img: "https://i.pinimg.com/736x/dc/c2/88/dcc288c0860f9dd5be2ac2e0ebaf5ec7.jpg" },
+      { title: "Martial God Regressed to Level 2", genre: "Martial Arts", img: "https://i.pinimg.com/736x/77/06/c2/7706c2a419e2976ae9af24d7c91d5eda.jpg" },
+      { title: "Star Instructor, Master Baek", genre: "Martial Arts", img: "https://i.pinimg.com/1200x/9b/98/53/9b9853b3c9753dcf16b4d14e284e61c1.jpg" },
+      { title: "Poison-Eating Healer", genre: "Fantasy", img: "https://i.pinimg.com/1200x/e5/9e/34/e59e341873bf6cc4978bddb364f7e78a.jpg" },
+      { title: "Standard of Reincarnation", genre: "Fantasy", img: "https://i.pinimg.com/1200x/a1/39/22/a13922c1c7371a82ce031347f7dcf4fb.jpg" },
+      { title: "MAGIC EMPEROR", genre: "MARTIAL ARTS", img: "https://i.pinimg.com/1200x/2f/8b/ae/2f8bae82be43c7d054c27c5a1279f633.jpg" },
+      { title: "A Returner's Magic Should Be Special", genre: "Fantasy", img: "https://i.pinimg.com/736x/42/73/6b/42736b46c7030ef1847ddbe20d84396e.jpg" },
+      { title: "The Great Mage Returns After 4000 Years", genre: "Fantasy", img: "https://i.pinimg.com/736x/98/ea/a0/98eaa0b17299c58001544563d74387e5.jpg" },
+      { title: "Leveling With The Gods", genre: "Fantasy", img: "https://i.pinimg.com/736x/52/38/fd/5238fd73cd296b6575699cff738e79ee.jpg" },
+      { title: "Manager Kim", genre: "Action", img: "https://i.pinimg.com/736x/5c/1d/04/5c1d04f93f72fa870ce8ce70a03de139.jpg" },
+      { title: "Study Group", genre: "Action", img: "https://i.pinimg.com/736x/d8/fe/a4/d8fea40ba29e3db79b2b387a4d436b56.jpg" },
+      { title: "Get Schooled", genre: "Drama", img: "https://i.pinimg.com/736x/36/6b/0b/366b0be703ba625c80a951b3aa448267.jpg" },
+      { title: "Unholy Blood", genre: "Fantasy", img: "https://i.pinimg.com/1200x/05/48/f7/0548f7c7f372d212d5500afc8d4fc9c8.jpg" },
+      { title: "Hero Has Returned", genre: "Action", img: "https://i.pinimg.com/1200x/88/05/1a/88051a02fc9a192fc43f4274683ed95e.jpg" },
+      { title: "Damn Reincarnation", genre: "Fantasy", img: "https://i.pinimg.com/736x/de/b5/72/deb572d7f3eea0aa34b59e3048bfeccb.jpg" },
+      { title: "Reality Quest", genre: "Game", img: "https://i.pinimg.com/736x/84/f1/f6/84f1f612be3d3c6a0d2a665511af63a3.jpg" },
+      { title: "I Obtained a Mythic Item", genre: "Fantasy", img: "https://i.pinimg.com/736x/55/c2/a8/55c2a85193869f64f7100ccf1532090a.jpg" },
+      { title: "Superhuman Era", genre: "Action", img: "https://i.pinimg.com/1200x/c9/64/cf/c964cf7af9dcea05328086178a8cc5d6.jpg" },
+      { title: "MookHyang - Dark Lady", genre: "Fantasy", img: "https://i.pinimg.com/736x/7c/4e/be/7c4ebef765c12c958a3f27a488868946.jpg" },
+      { title: "Noblesse", genre: "Supernatural", img: "https://i.pinimg.com/1200x/16/ad/dd/16addd591e9a859731c9fd34d2c81b78.jpg" },
+      { title: "Sweet Home", genre: "Horror", img: "https://i.pinimg.com/736x/ca/b6/ed/cab6edf1464764a3355c830208f24276.jpg" },
+      { title: "Shotgun Boy", genre: "Horror", img: "https://i.pinimg.com/736x/f9/04/dc/f904dc66428a5e3452e9265b52e5d380.jpg" },
+      { title: "Bastard", genre: "Thriller", img: "https://i.pinimg.com/736x/b6/8d/29/b68d294917d05571b2559aba7473ad31.jpg" },
+      { title: "Efforts Never Betray", genre: "Sports", img: "https://i.pinimg.com/736x/a3/93/5b/a3935bab9570b1f089142600ea238555.jpg" },
+      { title: "The Academy's Undercover Professor", genre: "Fantasy", img: "https://i.pinimg.com/736x/93/c5/30/93c5301da4d29f792afdf401946fbe1f.jpg" },
+      { title: "I Stole The Number One Ranker's Soul", genre: "Game", img: "https://i.pinimg.com/736x/75/3d/4d/753d4d67122117bcbbcc65dd64eca9ac.jpg" },
+      { title: "Latna Saga: Survival of a Sword King", genre: "Fantasy", img: "https://i.pinimg.com/736x/87/fd/c5/87fdc5aad544643c5276faf7221cd9fe.jpg" },
+
+    ];
+
+    function render() {
+      grid.innerHTML = "";
+
+      MANHWAS.forEach(m => {
+        const added = bookmarks.some(b => b.title === m.title);
+        const card = document.createElement("div");
+        card.className = "card bg-[#1c1b23] rounded-xl overflow-hidden";
+
+        card.innerHTML = `
+      <img src="${m.img}" class="w-full h-[400px] object-cover">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold mb-1">${m.title}</h2>
+        <p class="text-gray-400 mb-3">${m.genre}</p>
+        <button class="w-full ${added ? "bg-gray-600" : "bg-purple-700 hover:bg-purple-800"
+          } py-2 rounded-lg">
+          ${added ? "Added" : "Add"}
+        </button>
+      </div>
+    `;
+
+        if (!added) {
+          card.onclick = () => {
+            bookmarks.push(m);
+            localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+            window.location.href = "bookmark.html";
+          };
+        }
+
+        grid.appendChild(card);
+      });
+    }
+
+    render();
+  </script>
+  <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-700 pb-12">
+
+        <div>
+          <h2 class="text-2xl font-bold text-white mb-4">ComixHub</h2>
+          <p class="text-sm leading-relaxed text-gray-400">
+            Your ultimate hub for manhwa, manga, and comics.
+            Discover trending series, curated picks, and immersive storytelling —
+            all in one place.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">Explore</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="hover:text-white transition">Trending</li>
+            <li class="hover:text-white transition">New Releases</li>
+            <li class="hover:text-white transition">Top Rated</li>
+            <li class="hover:text-white transition">Genres</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">Community</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="hover:text-white transition">Reader Reviews</li>
+            <li class="hover:text-white transition">Discussion Boards</li>
+            <li class="hover:text-white transition">Recommendations</li>
+            <li class="hover:text-white transition">Creator Spotlights</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-4">Legal</h3>
+          <ul class="space-y-2 text-sm">
+            <li class="hover:text-white transition">Privacy Policy</li>
+            <li class="hover:text-white transition">Terms of Service</li>
+            <li class="hover:text-white transition">Content Guidelines</li>
+            <li class="hover:text-white transition">DMCA</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-between items-center mt-8 gap-4">
+        <p class="text-sm text-gray-500">
+          © 2026 ComixHub. All rights reserved.
+        </p>
+
+        <div class="flex gap-6 text-sm text-gray-400">
+          <span class="hover:text-white transition">Facebook</span>
+          <span class="hover:text-white transition">Twitter</span>
+          <span class="hover:text-white transition">Discord</span>
+          <span class="hover:text-white transition">Instagram</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+
+</html>

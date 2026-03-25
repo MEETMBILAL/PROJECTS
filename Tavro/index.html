@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <link rel="shortcut icon" href="image.png" type="">
+
+
+  <title>Tavro</title>
+</head>
+
+<body>
+
+
+  <section class="hero-section">
+
+    <header class="header_section" id="header">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container py-3">
+          <a class="navbar-brand fw-bold fs-3" href="index.html">
+            <span class="brand-text">Tavro</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <ul class="navbar-nav mx-auto gap-4">
+              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="#menusection">Menu</a></li>
+              <li class="nav-item"><a class="nav-link" href="#aboutsection">About</a></li>
+            </ul>
+
+            <div class="user_option d-flex align-items-center gap-4">
+              <a href="#" class="user_link text-decoration-none">
+                <i class="fa fa-user fs-5"></i>
+              </a>
+
+              <a href="#" class="cart_link position-relative text-decoration-none">
+                <svg width="22" height="22" viewBox="0 0 456.758 456.758" fill="currentColor">
+
+                </svg>
+              </a>
+
+              <a href="book.html" class="order_online btn btn-warning rounded-pill px-4 py-2 fw-semibold shadow-sm">
+                Book Now
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="carousel-content">
+            <h1>Tavro Restaurant & Hotel</h1>
+            <p>Experience the pinnacle of culinary artistry and refined living. Our sanctuary offers bespoke
+              services tailored to luxury.</p>
+            <div class="cta-group">
+              <a href="book.html" class="btn btn-premium btn-gold-hover" onclick="book.html">Book Your Stay</a>
+              <button class="btn btn-premium btn-ivory-hover">Order Cuisine</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-content">
+            <h1>Exclusive Dining Experience</h1>
+            <p>Indulge in a gastronomic journey with masterfully crafted dishes and a refined ambiance for
+              every occasion.</p>
+            <div class="cta-group">
+              <button class="btn btn-premium btn-gold-hover">Book Your Stay</button>
+              <button class="btn btn-premium btn-ivory-hover">Order Cuisine</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-content">
+            <h1>Luxury Rooms & Suites</h1>
+            <p>Relax in our elegantly designed suites with personalized service and attention to detail that
+              surpasses expectations.</p>
+            <div class="cta-group">
+              <button class="btn btn-premium btn-gold-hover">Book Your Stay</button>
+              <button class="btn btn-premium btn-ivory-hover">Order Cuisine</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-indicators custom-dots">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="bg-light">
+    <div class="container my-5">
+      <div class="text-center mb-4">
+        <h1 class="text-dark">Special Deals</h1>
+        <p class="text-muted">Restaurant & Hotel Offers</p>
+      </div>
+
+      <div class="row g-4">
+
+
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm d-flex flex-row align-items-center p-3 h-100">
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa" class="deal-img rounded"
+              alt="Luxury hotel">
+            <div class="card-body p-0 ps-3">
+              <h5 class="mb-1">Luxury Hotel Stay</h5>
+              <p class="fw-bold text-success mb-2">$199 / night</p>
+              <a href="#" class="btn btn-primary btn-sm">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm d-flex flex-row align-items-center p-3 h-100">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0" class="deal-img rounded"
+              alt="Fine dining">
+            <div class="card-body p-0 ps-3">
+              <h5 class="mb-1">Fine Dining</h5>
+              <p class="fw-bold text-success mb-2">$59</p>
+              <a href="#" class="btn btn-primary btn-sm">Reserve</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm d-flex flex-row align-items-center p-3 h-100">
+            <img
+              src="https://robbreport.com/wp-content/uploads/2023/01/AS_Romantic-Pool-Residence-Exterior-1.jpg?w=1000"
+              class="deal-img rounded" alt="Resort pool">
+            <div class="card-body p-0 ps-3">
+              <h5 class="mb-1">Resort Pool Access</h5>
+              <p class="fw-bold text-success mb-2">$39</p>
+              <a href="#" class="btn btn-primary btn-sm">View Deal</a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm d-flex flex-row align-items-center p-3 h-100">
+            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1" class="deal-img rounded"
+              alt="Breakfast buffet">
+            <div class="card-body p-0 ps-3">
+              <h5 class="mb-1">Breakfast Buffet</h5>
+              <p class="fw-bold text-success mb-2">$25</p>
+              <a href="#" class="btn btn-primary btn-sm">Get Offer</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm d-flex flex-row align-items-center p-3 h-100">
+            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb" class="deal-img rounded"
+              alt="Hotel room">
+            <div class="card-body p-0 ps-3">
+              <h5 class="mb-1">Weekend Escape</h5>
+              <p class="fw-bold text-success mb-2">$149 / night</p>
+              <a href="#" class="btn btn-primary btn-sm">Book Deal</a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-6">
+          <div class="card shadow-sm d-flex flex-row align-items-center p-3 h-100">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5" class="deal-img rounded"
+              alt="Lunch combo">
+            <div class="card-body p-0 ps-3">
+              <h5 class="mb-1">Lunch Combo</h5>
+              <p class="fw-bold text-success mb-2">$19</p>
+              <a href="#" class="btn btn-primary btn-sm">Order Now</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="food_section layout_padding-bottom" id="menusection">
+    <div class="container">
+
+      <div class="heading_container heading_center">
+        <h2 class="text-center">Tavro Premium Menu</h2>
+      </div>
+
+      <ul class="filters_menu text-center mb-5">
+        <li class="active" data-filter="all">All</li>
+        <li data-filter="premium">Premium Foods</li>
+        <li data-filter="luxury">Luxury Dishes</li>
+        <li data-filter="drinks">Drinks</li>
+      </ul>
+
+      <div class="row g-4" style="width: 100%;">
+
+        <div class=" col-md-4 menu-item" data-category="premium">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/1387141810/photo/grilled-pork-kebab-with-red-and-yellow-pepper.jpg?s=1024x1024&w=is&k=20&c=e4isWKygnVJAZMEE1x-HscqOI2QhcbmF6H8H3MzhJzA="
+                alt="Wagyu Steak" class="img-fluid">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Wagyu Steak</h5>
+              <p>Succulent wagyu beef grilled to perfection with truffle butter.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$75</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-md-4 menu-item" data-category="luxury">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/1500122620/photo/canadian-maine-lobster-thermidor-dish-with-broccoli-and-baby-potato-black-background.jpg?s=1024x1024&w=is&k=20&c=essefcg6lAq--HJ709ARzrFv4WJSCnG6U9Ts9tzpVho="
+                alt="Lobster Thermidor">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Lobster Thermidor</h5>
+              <p>Classic French lobster dish with creamy mustard sauce and herbs.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$85</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-md-4 menu-item" data-category="luxury">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/1318618684/photo/bread-toast-canape-with-foie-gras.jpg?s=1024x1024&w=is&k=20&c=Cu5k3ik26EBqtuVGPmgitggU-AyV7KPGNvVbMIm0t30="
+                alt="Foie Gras">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Foie Gras</h5>
+              <p>Rich and creamy duck liver pâté served with brioche toast.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$60</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-md-4 menu-item" data-category="premium">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/2029544246/photo/pancakes-with-red-caviar-on-grey-background.jpg?s=1024x1024&w=is&k=20&c=zo4jUNi8VnadyT-nRh99-1g6HauZCN4dNAjJlambX50="
+                alt="Caviar Blinis">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Caviar Blinis</h5>
+              <p>Delicate blinis topped with premium sturgeon caviar.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$95</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 menu-item" data-category="luxury">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/1461655743/photo/risotto-with-porcini-mushrooms-and-black-truffles-served-in-a-plate-top-view-gourmet-cousine.jpg?s=1024x1024&w=is&k=20&c=dLFKs3xcMCpzPnGMdrDQ4vM1jP-ZErVUld2vN4jXDPI="
+                alt="Truffle Risotto">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Truffle Risotto</h5>
+              <p>Creamy risotto infused with white truffle and parmesan cheese.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$50</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 menu-item" data-category="premium">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/2194244277/photo/sandwich-toast-with-smoked-salmon-and-cream-cheese-on-plate-grey-background-close-up.jpg?s=1024x1024&w=is&k=20&c=VPfsm7X17jYQ3X9CxpTq1z5slv7UFdBBhanCbmaIvsM="
+                alt="Smoked Salmon Canapés">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Smoked Salmon Canapés</h5>
+              <p>Elegant appetizers with smoked salmon and cream cheese on toast.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$40</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 menu-item" data-category="drinks">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/1266799425/photo/serving-drinks-for-new-years-party.jpg?s=1024x1024&w=is&k=20&c=jWv1eHXX_slNJpy7dUi6LlPtWjksP3CK_LTYj-TQk7c="
+                alt="Champagne Cocktail">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Champagne Cocktail</h5>
+              <p>Classic cocktail with champagne, bitters, and sugar cube.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$25</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4 menu-item" data-category="drinks">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/947501640/photo/drink-mojito-with-mint-and-lime-in-a-glass-in-the-open-air-next-to-lie-ice-cubes-against-the.jpg?s=1024x1024&w=is&k=20&c=M6cAK6b1tI0BK8ZLGlENywvIvM1Zq_mxLvwH8p-mF6Y="
+                alt="Mojito Royale">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Mojito Royale</h5>
+              <p>Fresh mint, lime, rum, and a splash of premium champagne.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$22</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4 menu-item" data-category="luxury">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/879896988/photo/chocolate-hazelnut-mousse-cake.jpg?s=1024x1024&w=is&k=20&c=CMrvhVRni8s9d21AxtQNIL3m4SDAwXcuRMofIHy475U="
+                alt="Luxury Chocolate Mousse">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Luxury Chocolate Mousse</h5>
+              <p>Rich chocolate mousse with edible gold leaf on top.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$35</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4 menu-item" data-category="premium">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/621272358/photo/buffet-table-corporate.jpg?s=1024x1024&w=is&k=20&c=NCZT0Ijh8HEQ4REsIj1ANy-7dZG9ERBCMZartfqB-ak="
+                alt="Exotic Fruit Platter">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Exotic Fruit Platter</h5>
+              <p>Seasonal exotic fruits beautifully arranged for a luxurious touch.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$30</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4 menu-item" data-category="drinks">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/2174437507/photo/close-up-of-sommelier-swirling-glass-of-red-wine-in-well-stocked-wine-cellar-with-a-free-copy.jpg?s=1024x1024&w=is&k=20&c=Rg7TQCR9nMMz_xg3ysnSSLKKLrYNcR_VsHQogsn_TgI="
+                alt="Vintage Wine">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Vintage Wine</h5>
+              <p>Premium aged wine from select vineyards around the world.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$55</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4 menu-item" data-category="drinks">
+          <div class="food-box text-center">
+            <div class="img-box">
+              <img
+                src="https://media.istockphoto.com/id/505168330/photo/cup-of-cafe-latte-with-coffee-beans-and-cinnamon-sticks.jpg?s=1024x1024&w=is&k=20&c=kXeItl86M_hlo05MA5S2fyiMvBIfZanPwzBccgMG8GI="
+                alt="Luxury Coffee">
+            </div>
+            <div class="detail-box mt-3">
+              <h5>Luxury Coffee</h5>
+              <p>Specialty coffee brewed with rare Arabica beans and served elegantly.</p>
+              <div class="options d-flex justify-content-center align-items-center gap-4 mt-3">
+                <h6 class="mb-0">$18</h6>
+                <a href="#" class="btn-add-cart" title="Add to Cart">Add</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-box text-center mt-5">
+        <a href="#" class="btn btn-primary px-5 py-3">View More</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="position-relative d-flex align-items-center" style="min-height: 600px; 
+                background: url('https://img.freepik.com/free-photo/restaurant-with-tables-chairs-outside_1127-2018.jpg?semt=ais_hybrid&w=1480&q=80') center/cover fixed no-repeat; 
+                padding-top: 5rem; padding-bottom: 7rem;" id="aboutsection">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6" style="max-width: 480px;">
+          <h1 class="display-4 fw-bold mb-4 text-dark">
+            We Are Tavro
+          </h1>
+          <p class="lead fw-bold mb-4 text-secondary">
+            Experience fine dining with a cozy outdoor atmosphere and unforgettable flavors.
+          </p>
+          <a href="#" class="btn btn-dark btn-lg shadow" style="border-radius: 12px; padding: 12px 24px;">
+            Book a Table
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contactsection">
+    <div class="container">
+      <div class="row g-5 align-items-start">
+
+
+        <div class="col-lg-5 contact-left">
+          <h1 class="text-light">Get in touch</h1>
+          <p>
+            At TAVRO Hotel & Restaurant, we believe every guest experience begins
+            with a conversation. Reach out to us for reservations, events, or any
+            special requests — we’re here to assist you.
+          </p>
+
+          <div class="contact-info">
+            <div>
+              <i class="bi bi-geo-alt"></i>
+              88 Tavro Avenue, Downtown District, New York, NY 10001
+            </div>
+            <div>
+              <i class="bi bi-telephone"></i>
+              +1 (212) 555-8899
+            </div>
+            <div>
+              <i class="bi bi-envelope"></i>
+              contact@tavrohotel.com
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <form>
+            <div class="row g-4">
+
+              <div class="col-md-6">
+                <label class="form-label">First name</label>
+                <input type="text" class="form-control" placeholder="Enter your first name" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Last name</label>
+                <input type="text" class="form-control" placeholder="Enter your last name" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="you@example.com" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Phone number</label>
+                <input type="tel" class="form-control" placeholder="+1 (___) ___-____" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" placeholder="Write your message or reservation request here..."
+                  required></textarea>
+              </div>
+
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-send" style="background-color: #6366f1;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-weight: 500;
+      color: #fff;">
+                  Send message
+                </button>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="tavro-testi-wrapper">
+    <div class="tavro-testi-header">
+      <h2>What Guests Say</h2>
+      <p>Experience the luxury and taste at Tavro Restaurant & Hotel</p>
+    </div>
+
+    <div class="tavro-testi-cards">
+
+      <div class="tavro-testi-card">
+        <p class="tavro-testi-text">"Absolutely loved the ambiance and the exquisite dishes. Tavro Hotel exceeded our
+          expectations!"</p>
+        <div class="tavro-testi-author">
+          <img src="https://i.pravatar.cc/50?img=1" alt="Guest photo">
+          <div class="tavro-testi-author-info">
+            <h4>Emily R.</h4>
+            <span>Food Enthusiast</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tavro-testi-card">
+        <p class="tavro-testi-text">"The service was impeccable and the rooms were stunning. A perfect getaway
+          experience!"</p>
+        <div class="tavro-testi-author">
+          <img src="https://i.pravatar.cc/50?img=2" alt="Guest photo">
+          <div class="tavro-testi-author-info">
+            <h4>Michael B.</h4>
+            <span>Traveler</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tavro-testi-card">
+        <p class="tavro-testi-text">"From the gourmet cuisine to the cozy rooms, Tavro Hotel & Restaurant offers an
+          unforgettable experience."</p>
+        <div class="tavro-testi-author">
+          <img src="https://i.pravatar.cc/50?img=3" alt="Guest photo">
+          <div class="tavro-testi-author-info">
+            <h4>Sophia L.</h4>
+            <span>Food Blogger</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="tavro-footer py-5">
+    <div class="container">
+      <div class="row gy-4">
+
+
+        <div class="col-lg-4">
+          <h4 class="tavro-logo mb-3">TAVRO</h4>
+          <p class="tavro-text">
+            Tavro Restaurant & Hotel offers refined dining and comfortable stays,
+            blending modern elegance with warm hospitality.
+          </p>
+
+          <div class="tavro-social mt-3">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-google"></i></a>
+          </div>
+        </div>
+
+
+        <div class="col-6 col-md-3 col-lg-2">
+          <h6 class="footer-title">Restaurant</h6>
+          <ul class="list-unstyled">
+            <li><a href="#menusection">Menu</a></li>
+            <li><a href="#">Reservations</a></li>
+            <li><a href="#">Private Dining</a></li>
+            <li><a href="#">Events</a></li>
+          </ul>
+        </div>
+
+
+        <div class="col-6 col-md-3 col-lg-2">
+          <h6 class="footer-title">Hotel</h6>
+          <ul class="list-unstyled">
+            <li><a href="book.html">Rooms & Suites</a></li>
+            <li><a href="#">Amenities</a></li>
+            <li><a href="#">Offers</a></li>
+            <li><a href="#">Gallery</a></li>
+          </ul>
+        </div>
+
+
+        <div class="col-6 col-md-3 col-lg-2">
+          <h6 class="footer-title">Company</h6>
+          <ul class="list-unstyled">
+            <li><a href="#aboutsection">About Tavro</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#contactsection">Contact</a></li>
+          </ul>
+        </div>
+
+
+        <div class="col-6 col-md-3 col-lg-2">
+          <h6 class="footer-title">Legal</h6>
+          <ul class="list-unstyled">
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cancellation Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <hr class="tavro-divider my-4">
+
+      <div class="text-center tavro-copy">
+        © 2026 Tavro Restaurant & Hotel. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    const filterBtns = document.querySelectorAll(".filters_menu li");
+    const menuItems = document.querySelectorAll(".menu-item");
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const filter = btn.dataset.filter;
+
+        menuItems.forEach(item => {
+          if (filter === "all" || item.dataset.category === filter) {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('#header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

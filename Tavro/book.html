@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background-color: #1f2937;
+            color: #f9fafb;
+        }
+
+        .card {
+            background-color: #374151;
+            border: none;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: #4b5563;
+            color: #f9fafb;
+        }
+
+        .form-control::placeholder {
+            color: #d1d5db;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            border: none;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-5">
+
+    <div class="container">
+        <h1 class="text-3xl font-bold mb-5 text-center">Hotel Room Booking</h1>
+
+        <div class="max-w-2xl mx-auto bg-slate-700 p-5 rounded-lg shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-center">Book a Room</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                </div>
+                <div class="mb-3">
+                    <label for="roomType" class="form-label">Room Type</label>
+                    <select class="form-select" id="roomType" required>
+                        <option value="">Select Room</option>
+                        <option>Deluxe Room</option>
+                        <option>Standard Room</option>
+                        <option>Suite Room</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="checkin" class="form-label">Check-in Date</label>
+                    <input type="date" class="form-control" id="checkin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="checkout" class="form-label">Check-out Date</label>
+                    <input type="date" class="form-control" id="checkout" required>
+                </div>
+                <div class="mb-3">
+                    <label for="guests" class="form-label">Number of Guests</label>
+                    <input type="number" class="form-control" id="guests" min="1" max="10" value="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Book Now</button>
+            </form>
+        </div>
+
+        <div id="roomsGrid" class="row row-cols-1 row-cols-md-3 g-4"></div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const roomsGrid = document.getElementById('roomsGrid');
+
+        const roomData = [
+            {
+                type: "Deluxe Room",
+                price: 150,
+                images: [
+                    "https://hotelroyalhoian.vn/wp-content/uploads/2025/05/what-is-a-deluxe-room-2-1024x675.jpg",
+                    "https://hotelroyalhoian.vn/wp-content/uploads/2025/05/what-is-a-deluxe-room-7-1024x675.jpg",
+                    "https://hotelroyalhoian.vn/wp-content/uploads/2025/05/what-is-a-deluxe-room-3-1024x675.jpg",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQsiygrQxuyfMlp982tsS2dIlK55jusNE6LA&s"
+                ]
+            },
+            {
+                type: "Standard Room",
+                price: 100,
+                images: [
+                    "https://hospitalityinsights.ehl.edu/hubfs/Imported_Blog_Media/Hotel-design.jpg",
+                    "https://www.belvederehotelnyc.com/hs-fs/hubfs/Standard%20Double%20Double%20Room.png?height=512&name=Standard+Double+Double+Room.png&width=768",
+                    "https://www.thankyouhotel.com.tr/cdn/shop/files/standartroom101-2.jpg?v=1726080733",
+                    "https://images.trvl-media.com/lodging/89000000/88090000/88080600/88080502/43bb9723.jpg?impolicy=fcrop&w=1200&h=800&quality=medium"
+                ]
+            },
+            {
+                type: "Suite Room",
+                price: 250,
+                images: [
+                    "https://dq5r178u4t83b.cloudfront.net/wp-content/uploads/sites/125/2021/08/11060441/deluxe_harbour_web.jpg",
+                    "https://thewallace.com/hubfs/Website/room-11.webp",
+                    "https://www.venetianlasvegas.com/adobe/dynamicmedia/deliver/dm-aid--70ff0938-4613-4379-bc7c-0adb8adbd222/king_bed_1_1200x800.jpg",
+                    "https://cdn-ijnhp.nitrocdn.com/pywIAllcUPgoWDXtkiXtBgvTOSromKIg/assets/images/optimized/rev-5794eaa/www.jaypeehotels.com/blog/wp-content/uploads/2024/09/Blog-6-scaled.jpg"
+                ]
+            }
+        ];
+
+
+        for (let i = 1; i <= 51; i++) {
+            const data = roomData[i % roomData.length];
+            const roomName = `${data.type} ${i}`;
+
+            const imgUrl = data.images[i % data.images.length];
+
+            const col = document.createElement("div");
+            col.className = "col";
+            col.innerHTML = `
+        <div class="card h-100 p-3 shadow-lg">
+          <img src="${imgUrl}" class="card-img-top rounded" alt="${roomName}">
+          <div class="card-body">
+            <h5 class="card-title">${roomName}</h5>
+            <p class="card-text">A comfortable ${data.type.toLowerCase()} with modern amenities and style.</p>
+            <p class="fw-bold">$${data.price}/night</p>
+            <button class="btn btn-primary w-full">Book Now</button>
+          </div>
+        </div>
+      `;
+
+            roomsGrid.appendChild(col);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login / Sign Up | ComixHub</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='blue' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m16 6 4 14'/><path d='M12 6v14'/><path d='M8 8v12'/><path d='M4 4v16'/></svg>"
+        type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --primary-hover: #8b5cf6;
+            --bg-dark: #0f0f17;
+            --card: #1a1a2e;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e5e7eb;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .bg-primary {
+            background-color: var(--primary);
+        }
+
+        .hover\:bg-primary-hover:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .bg-card {
+            background-color: var(--card);
+        }
+
+
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 15px;
+                padding: 0;
+            }
+
+            header {
+                padding: 1rem !important;
+            }
+
+            main {
+                padding: 1rem !important;
+                min-height: calc(100vh - 80px);
+                align-items: flex-start;
+                padding-top: 2rem !important;
+            }
+
+            .w-full.max-w-md {
+                max-width: 100%;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .bg-card {
+                border-radius: 16px !important;
+                margin: 0 auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .flex.border-b {
+                display: flex;
+                width: 100%;
+            }
+
+            #loginTab,
+            #signupTab {
+                padding: 1rem !important;
+                font-size: 1rem !important;
+                font-weight: 600;
+                flex: 1;
+                text-align: center;
+                border: none;
+                background: transparent;
+                color: rgba(255, 255, 255, 0.6);
+                transition: all 0.3s ease;
+            }
+
+            .tab-active {
+                color: white !important;
+                font-weight: 700;
+                position: relative;
+            }
+
+            .tab-active::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: var(--primary);
+                border-radius: 3px;
+            }
+
+            .p-8 {
+                padding: 1.5rem !important;
+            }
+
+            .space-y-5 {
+                gap: 1.25rem !important;
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                padding: 0.9rem !important;
+                font-size: 16px;
+                border-radius: 10px !important;
+                width: 100%;
+                border: 1px solid rgba(126, 34, 206, 0.4) !important;
+            }
+
+            input:focus {
+                border-color: var(--primary) !important;
+                box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2) !important;
+                outline: none;
+            }
+
+            label.block {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem !important;
+            }
+
+            input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                border-radius: 4px;
+            }
+
+            .flex.items-center span.ml-2 {
+                font-size: 0.9rem;
+                margin-left: 0.5rem !important;
+            }
+
+            a.text-purple-400,
+            button.text-purple-400 {
+                font-size: 0.9rem;
+                padding: 0.2rem 0;
+                display: inline-block;
+            }
+
+            button[type="submit"] {
+                padding: 1rem !important;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: 12px !important;
+                margin-top: 0.5rem;
+                min-height: 48px;
+            }
+
+            .social-buttons {
+                display: flex;
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .social-button {
+                flex: 1;
+                padding: 0.8rem;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-weight: 500;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .flex.items-center.justify-between {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            footer {
+                padding: 1.5rem 1rem !important;
+                font-size: 0.8rem;
+                line-height: 1.4;
+                margin-top: auto;
+                border-top: 1px solid rgba(126, 34, 206, 0.2);
+            }
+
+            footer p {
+                max-width: 100%;
+            }
+
+            .alert {
+                padding: 1rem;
+                border-radius: 10px;
+                margin: 1rem 0;
+                font-size: 0.9rem;
+            }
+
+            .alert-success {
+                background: rgba(34, 197, 94, 0.15);
+                border: 1px solid rgba(34, 197, 94, 0.3);
+                color: #86efac;
+            }
+
+            .alert-error {
+                background: rgba(239, 68, 68, 0.15);
+                border: 1px solid rgba(239, 68, 68, 0.3);
+                color: #fca5a5;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            main {
+                padding: 0.75rem !important;
+                padding-top: 1.5rem !important;
+            }
+
+            .bg-card {
+                border-radius: 14px !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            #loginTab,
+            #signupTab {
+                padding: 0.9rem !important;
+                font-size: 0.95rem !important;
+            }
+
+            .p-8 {
+                padding: 1.25rem !important;
+            }
+
+            .space-y-5 {
+                gap: 1rem !important;
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                padding: 0.8rem !important;
+                font-size: 15px;
+            }
+
+            button[type="submit"] {
+                padding: 0.9rem !important;
+                font-size: 0.95rem;
+                min-height: 46px;
+            }
+
+            input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+            }
+
+            label.block,
+            .text-sm,
+            a.text-purple-400,
+            button.text-purple-400,
+            .text-gray-400 {
+                font-size: 0.85rem;
+            }
+
+            .text-center.text-gray-500.text-sm {
+                font-size: 0.8rem;
+                margin-top: 1rem !important;
+                padding: 0 1rem;
+            }
+
+            footer {
+                padding: 1rem !important;
+                font-size: 0.75rem;
+            }
+
+            .flex.items-center.justify-between {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            a.text-purple-400 {
+                align-self: flex-end;
+            }
+        }
+
+        @media screen and (max-height: 600px) and (orientation: landscape) {
+            main {
+                padding-top: 1rem !important;
+                padding-bottom: 1rem !important;
+                align-items: center;
+            }
+
+            .bg-card {
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .p-8 {
+                padding: 1rem !important;
+            }
+
+            .space-y-5 {
+                gap: 0.75rem !important;
+            }
+
+            button[type="submit"] {
+                padding: 0.7rem !important;
+                min-height: 42px;
+            }
+
+            #loginTab,
+            #signupTab {
+                padding: 0.7rem !important;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            main {
+                padding: 3rem 2rem !important;
+            }
+
+            .w-full.max-w-md {
+                max-width: 420px;
+            }
+
+            .bg-card {
+                border-radius: 20px !important;
+            }
+
+            .p-8 {
+                padding: 2rem !important;
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                padding: 1rem !important;
+                font-size: 16px;
+            }
+
+            button[type="submit"] {
+                padding: 1.1rem !important;
+                font-size: 1.05rem;
+            }
+
+            footer {
+                padding: 2rem !important;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+
+            .hover\:bg-primary-hover:hover {
+                background-color: var(--primary) !important;
+            }
+
+            .hover\:text-purple-300:hover {
+                color: var(--primary) !important;
+            }
+
+            button[type="submit"]:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+
+            #loginTab:active,
+            #signupTab:active,
+            a.text-purple-400:active,
+            button.text-purple-400:active {
+                opacity: 0.7;
+                transition: opacity 0.1s ease;
+            }
+
+            input[type="checkbox"] {
+                min-width: 24px;
+                min-height: 24px;
+            }
+
+            button,
+            a,
+            input {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            input:focus {
+                outline: 2px solid var(--primary);
+                outline-offset: 2px;
+            }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
+            .bg-card {
+                border-width: 0.5px;
+            }
+        }
+
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: min(0px, env(safe-area-inset-left));
+                padding-right: min(0px, env(safe-area-inset-right));
+                padding-top: min(0px, env(safe-area-inset-top));
+                padding-bottom: min(0px, env(safe-area-inset-bottom));
+            }
+
+            main {
+                padding-left: max(1rem, env(safe-area-inset-left)) !important;
+                padding-right: max(1rem, env(safe-area-inset-right)) !important;
+                padding-top: max(2rem, env(safe-area-inset-top)) !important;
+            }
+
+            footer {
+                padding-left: max(1rem, env(safe-area-inset-left)) !important;
+                padding-right: max(1rem, env(safe-area-inset-right)) !important;
+                padding-bottom: max(1.5rem, env(safe-area-inset-bottom)) !important;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .bg-card {
+                background-color: #1a1a2e;
+                border-color: rgba(126, 34, 206, 0.3);
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                background-color: #16151D;
+                color: white;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #f5f5f7;
+                color: #333;
+            }
+
+            .bg-card {
+                background-color: white;
+                border-color: #e5e7eb;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                background-color: #f9fafb;
+                color: #333;
+                border-color: #d1d5db;
+            }
+
+            .text-gray-400 {
+                color: #6b7280 !important;
+            }
+
+            .text-gray-500 {
+                color: #6b7280 !important;
+            }
+
+            footer {
+                background-color: #f1f5f9;
+                color: #64748b;
+                border-top-color: #e2e8f0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .tab-active::after {
+                transition: none;
+            }
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .bg-card {
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                background: white !important;
+                color: black !important;
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                background: white !important;
+                color: black !important;
+                border: 1px solid #ccc !important;
+            }
+
+            button[type="submit"],
+            #loginTab,
+            #signupTab,
+            footer {
+                display: none !important;
+            }
+
+            main {
+                padding: 0 !important;
+            }
+        }
+
+        @media screen and (min-width: 1440px) {
+            main {
+                padding: 4rem !important;
+            }
+
+            .w-full.max-w-md {
+                max-width: 480px;
+            }
+
+            .p-8 {
+                padding: 3rem !important;
+            }
+
+            input[type="email"],
+            input[type="password"],
+            input[type="text"] {
+                padding: 1.1rem !important;
+                font-size: 17px;
+            }
+
+            button[type="submit"] {
+                padding: 1.2rem !important;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+
+            button[disabled],
+            button.loading {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+
+            .loading-spinner {
+                width: 20px;
+                height: 20px;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-top-color: white;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .password-strength {
+                margin-top: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .strength-bar {
+                height: 4px;
+                border-radius: 2px;
+                margin-top: 0.25rem;
+                transition: width 0.3s ease;
+            }
+
+            .strength-weak {
+                background: #ef4444;
+                width: 25%;
+            }
+
+            .strength-medium {
+                background: #f59e0b;
+                width: 50%;
+            }
+
+            .strength-strong {
+                background: #10b981;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+
+
+    <main class="flex-1 flex items-center justify-center py-12 px-4">
+        <div class="w-full max-w-md">
+            <div
+                class="bg-card rounded-2xl shadow-2xl shadow-purple-900/30 overflow-hidden border border-purple-900/40">
+
+                <div class="flex border-b border-purple-900/50">
+                    <button id="loginTab"
+                        class="flex-1 py-4 font-semibold text-lg focus:outline-none transition tab-active">
+                        Login
+                    </button>
+                    <button id="signupTab" class="flex-1 py-4 font-semibold text-lg focus:outline-none transition">
+                        Sign Up
+                    </button>
+                </div>
+                <div class="mb-6 md:hidden">
+                    <a href="index.html" class="flex items-center text-purple-400 hover:text-purple-300">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Home
+                    </a>
+                </div>
+                <div class="p-8">
+
+                    <form id="loginForm" class="space-y-5">
+                        <div>
+                            <label for="loginEmail" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                            <input type="email" id="loginEmail" required
+                                class="w-full bg-[#16151D] border border-purple-900/60 text-white rounded-lg px-4 py-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+                                placeholder="you@example.com">
+                        </div>
+
+                        <div>
+                            <label for="loginPassword"
+                                class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                            <input type="password" id="loginPassword" required
+                                class="w-full bg-[#16151D] border border-purple-900/60 text-white rounded-lg px-4 py-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+                                placeholder="••••••••">
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm">
+                            <label class="flex items-center">
+                                <input type="checkbox"
+                                    class="rounded border-purple-600 text-purple-600 focus:ring-purple-500">
+                                <span class="ml-2 text-gray-400">Remember me</span>
+                            </label>
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition">Forgot password?</a>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition shadow-md">
+                            Sign In
+                        </button>
+
+                        <p class="text-center text-gray-400 text-sm mt-4">
+                            Don't have an account?
+                            <button type="button" id="toSignup"
+                                class="text-purple-400 hover:text-purple-300 font-medium">Sign up</button>
+                        </p>
+                    </form>
+
+                    <form id="signupForm" class="space-y-5 hidden">
+                        <div>
+                            <label for="signupUsername"
+                                class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+                            <input type="text" id="signupUsername" required
+                                class="w-full bg-[#16151D] border border-purple-900/60 text-white rounded-lg px-4 py-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+                                placeholder="coolreader42">
+                        </div>
+
+                        <div>
+                            <label for="signupEmail" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                            <input type="email" id="signupEmail" required
+                                class="w-full bg-[#16151D] border border-purple-900/60 text-white rounded-lg px-4 py-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+                                placeholder="you@example.com">
+                        </div>
+
+                        <div>
+                            <label for="signupPassword"
+                                class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                            <input type="password" id="signupPassword" required
+                                class="w-full bg-[#16151D] border border-purple-900/60 text-white rounded-lg px-4 py-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+                                placeholder="••••••••">
+                        </div>
+
+                        <div>
+                            <label for="signupConfirm" class="block text-sm font-medium text-gray-300 mb-1">Confirm
+                                Password</label>
+                            <input type="password" id="signupConfirm" required
+                                class="w-full bg-[#16151D] border border-purple-900/60 text-white rounded-lg px-4 py-3 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition"
+                                placeholder="••••••••">
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition shadow-md">
+                            Create Account
+                        </button>
+
+                        <p class="text-center text-gray-400 text-sm mt-4">
+                            Already have an account?
+                            <button type="button" id="toLogin"
+                                class="text-purple-400 hover:text-purple-300 font-medium">Login</button>
+                        </p>
+                    </form>
+
+                </div>
+            </div>
+
+            <p class="text-center text-gray-500 text-sm mt-6">
+                Or continue with social accounts (coming soon)
+            </p>
+        </div>
+    </main>
+
+    <footer class="bg-[#0a0a14] py-6 text-center text-gray-500 text-sm border-t border-purple-900/30">
+        <p>© 2026 ComixHub — Fan-powered manhwa & webtoon reading experience.<br>All content belongs to their respective
+            owners.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const toSignup = document.getElementById('toSignup');
+        const toLogin = document.getElementById('toLogin');
+
+        function showLogin() {
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            loginTab.classList.add('tab-active', 'bg-purple-900/30', 'text-white');
+            signupTab.classList.remove('tab-active', 'bg-purple-900/30', 'text-white');
+        }
+
+        function showSignup() {
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            signupTab.classList.add('tab-active', 'bg-purple-900/30', 'text-white');
+            loginTab.classList.remove('tab-active', 'bg-purple-900/30', 'text-white');
+        }
+
+        loginTab.addEventListener('click', showLogin);
+        signupTab.addEventListener('click', showSignup);
+        toSignup.addEventListener('click', showSignup);
+        toLogin.addEventListener('click', showLogin);
+
+        function handleSuccess() {
+            alert('Success! Redirecting...');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 800);
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleSuccess();
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pw = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            if (pw !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            handleSuccess();
+        });
+
+        showLogin();
+        function handleSuccess() {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.innerHTML = '<div class="loading-spinner"></div>';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                alert('Success! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 800);
+            }, 1500);
+        }
+    </script>
+
+    <style>
+        .tab-active {
+            background-color: rgba(126, 34, 206, 0.2);
+            border-bottom: 3px solid var(--primary);
+        }
+    </style>
+</body>
+
+</html>
