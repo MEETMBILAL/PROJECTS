@@ -1,0 +1,16 @@
+{% extends "emails/base_email.html" %}
+{% block title %}Your order has shipped{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 16px;color:#2C4A3E;">Your order is on its way!</h2>
+  <p style="line-height:1.6;color:#6B6560;">
+    Good news — order <strong style="font-family:monospace;">{{ order.order_number }}</strong>
+    has been shipped.
+  </p>
+  {% if tracking_number %}
+  <p style="line-height:1.6;color:#6B6560;">
+    Tracking number:
+    <strong style="font-family:monospace;color:#1C1C1A;">{{ tracking_number }}</strong>
+  </p>
+  {% endif %}
+  <p style="color:#9B9690;font-size:13px;">We hope you enjoy your books!</p>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "emails/base_email.html" %}
+{% block title %}Print order received{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 16px;color:#2C4A3E;">We received your print order</h2>
+  <p style="line-height:1.6;color:#6B6560;">
+    Your Print-on-Demand order <strong>{{ order.title }}</strong> has been received and is
+    now being reviewed by our print team.
+  </p>
+  <ul style="color:#6B6560;line-height:1.8;">
+    <li>Pages: {{ order.page_count }}</li>
+    <li>Copies: {{ order.copies }}</li>
+    <li>Total: PKR {{ order.total_price }}</li>
+  </ul>
+  <p style="color:#9B9690;font-size:13px;">We'll notify you once printing begins.</p>
+{% endblock %}
