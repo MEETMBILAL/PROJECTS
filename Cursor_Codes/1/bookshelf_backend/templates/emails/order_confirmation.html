@@ -1,0 +1,34 @@
+{% extends "emails/base_email.html" %}
+{% block title %}Order Confirmed{% endblock %}
+{% block content %}
+<h2 style="margin:0 0 12px;color:#2C4A3E;font-size:20px;">Thank you for your order!</h2>
+<p style="margin:0 0 16px;font-size:15px;line-height:1.5;">
+  Your order <strong>{{ order.order_number }}</strong> has been received and is
+  now <strong>{{ order.get_status_display }}</strong>.
+</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin-bottom:16px;">
+  <thead>
+    <tr style="background:#F3F1EC;">
+      <th align="left" style="padding:10px;font-size:13px;color:#6B6560;">Item</th>
+      <th align="center" style="padding:10px;font-size:13px;color:#6B6560;">Qty</th>
+      <th align="right" style="padding:10px;font-size:13px;color:#6B6560;">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr style="border-bottom:1px solid #E2DDD5;">
+      <td style="padding:10px;font-size:14px;">{{ item.title_snapshot }}</td>
+      <td align="center" style="padding:10px;font-size:14px;">{{ item.quantity }}</td>
+      <td align="right" style="padding:10px;font-size:14px;">PKR {{ item.total_price }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<table role="presentation" width="100%" style="font-size:14px;">
+  <tr><td align="right" style="padding:2px 10px;color:#6B6560;">Subtotal</td><td align="right" width="120" style="padding:2px 10px;">PKR {{ order.subtotal }}</td></tr>
+  <tr><td align="right" style="padding:2px 10px;color:#6B6560;">Shipping</td><td align="right" style="padding:2px 10px;">PKR {{ order.shipping_fee }}</td></tr>
+  <tr><td align="right" style="padding:2px 10px;color:#6B6560;">Discount</td><td align="right" style="padding:2px 10px;">- PKR {{ order.discount }}</td></tr>
+  <tr><td align="right" style="padding:8px 10px;font-weight:bold;color:#2C4A3E;">Total</td><td align="right" style="padding:8px 10px;font-weight:bold;color:#2C4A3E;">PKR {{ order.total }}</td></tr>
+</table>
+<p style="margin:20px 0 0;font-size:14px;color:#6B6560;">We will notify you when your order ships.</p>
+{% endblock %}

@@ -1,0 +1,6 @@
+-r base.txt
+black==24.4.2
+flake8==7.1.0
+isort==5.13.2
+ipython==8.26.0
+django-extensions==3.2.3

@@ -1,0 +1,28 @@
+"""Signal handlers for the accounts app."""
+from __future__ import annotations
+
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from .models import CustomUser
+
+
+@receiver(post_save, sender=CustomUser)
+def send_welcome_email(sender, instance, created, **kwargs) -> None:
+    """Queue a welcome email when a brand new user is created."""
+    if not created:
+        return
+    # Imported lazily to avoid import cycles and to keep startup light.
+    try:
+        from apps.orders.tasks import send_welcome_email_task
+
+        send_welcome_email_task.delay(instance.pk)
+    except Exception:
+        # Email delivery must never block user creation.
+        if settings.DEBUG:
+            import logging
+
+            logging.getLogger(__name__).info(
+                "Welcome email skipped for %s", instance.email
+            )
