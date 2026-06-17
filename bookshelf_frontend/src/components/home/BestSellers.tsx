@@ -10,7 +10,7 @@ import { StarRating } from "@/components/common/StarRating";
 import { ROUTES } from "@/constants/routes";
 import { useBestsellers } from "@/hooks/useBooks";
 
-const PLACEHOLDER = "/images/placeholder-book.png";
+const PLACEHOLDER = "/images/placeholder-book.svg";
 
 export function BestSellers() {
   const { data: books, isLoading } = useBestsellers();

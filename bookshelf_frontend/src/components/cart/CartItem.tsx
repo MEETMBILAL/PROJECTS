@@ -9,7 +9,7 @@ import { formatPrice } from "@/lib/utils";
 import type { LocalCartItem } from "@/store/cartStore";
 import { useCartStore } from "@/store/cartStore";
 
-const PLACEHOLDER = "/images/placeholder-book.png";
+const PLACEHOLDER = "/images/placeholder-book.svg";
 
 export function CartItem({ item, compact = false }: { item: LocalCartItem; compact?: boolean }) {
   const updateQuantity = useCartStore((state) => state.updateQuantity);

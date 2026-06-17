@@ -14,7 +14,7 @@ import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
 import type { BookDetail } from "@/types";
 
-const PLACEHOLDER = "/images/placeholder-book.png";
+const PLACEHOLDER = "/images/placeholder-book.svg";
 
 export function BookDetailHero({ book }: { book: BookDetail }) {
   const { addToCart } = useCart();

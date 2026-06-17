@@ -10,7 +10,7 @@ import { useCart } from "@/hooks/useCart";
 import { truncate } from "@/lib/utils";
 import type { Book } from "@/types";
 
-const PLACEHOLDER = "/images/placeholder-book.png";
+const PLACEHOLDER = "/images/placeholder-book.svg";
 
 export function BookList({ books }: { books: Book[] }) {
   const { addToCart } = useCart();

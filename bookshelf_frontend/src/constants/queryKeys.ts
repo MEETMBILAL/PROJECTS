@@ -1,5 +1,5 @@
 export const queryKeys = {
-  books: (params?: Record<string, unknown>) => ["books", params] as const,
+  books: (params?: unknown) => ["books", params] as const,
   book: (slug: string) => ["book", slug] as const,
   featured: () => ["books", "featured"] as const,
   bestsellers: () => ["books", "bestsellers"] as const,

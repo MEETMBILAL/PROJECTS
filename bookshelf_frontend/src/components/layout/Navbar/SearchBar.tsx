@@ -9,7 +9,7 @@ import { Search } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { useSearch } from "@/hooks/useSearch";
 
-const PLACEHOLDER = "/images/placeholder-book.png";
+const PLACEHOLDER = "/images/placeholder-book.svg";
 
 export function SearchBar() {
   const router = useRouter();

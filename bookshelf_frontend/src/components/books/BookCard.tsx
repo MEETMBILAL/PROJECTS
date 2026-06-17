@@ -13,7 +13,7 @@ import { useWishlist } from "@/hooks/useWishlist";
 import { cn } from "@/lib/utils";
 import type { Book } from "@/types";
 
-const PLACEHOLDER = "/images/placeholder-book.png";
+const PLACEHOLDER = "/images/placeholder-book.svg";
 
 export function BookCard({ book }: { book: Book }) {
   const { addToCart } = useCart();
