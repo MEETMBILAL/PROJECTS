@@ -48,6 +48,7 @@ class PODSpecificationViewSet(viewsets.ReadOnlyModelViewSet):
 class PODOrderViewSet(viewsets.ModelViewSet):
     serializer_class = PODOrderSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = None
     http_method_names = ["get", "post", "head", "options"]
 
     def get_queryset(self):

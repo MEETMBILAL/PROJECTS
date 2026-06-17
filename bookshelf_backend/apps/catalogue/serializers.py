@@ -102,7 +102,11 @@ class BookListSerializer(serializers.ModelSerializer):
 class BookDetailSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
     publisher = PublisherSerializer(read_only=True)
-    category = CategorySerializer(read_only=True)
+    category = serializers.SlugRelatedField(slug_field="name", read_only=True)
+    category_slug = serializers.SlugRelatedField(
+        source="category", slug_field="slug", read_only=True
+    )
+    category_detail = CategorySerializer(source="category", read_only=True)
     tags = TagSerializer(many=True, read_only=True)
     effective_price = serializers.DecimalField(
         max_digits=10, decimal_places=2, read_only=True
@@ -123,6 +127,8 @@ class BookDetailSerializer(serializers.ModelSerializer):
             "authors",
             "publisher",
             "category",
+            "category_slug",
+            "category_detail",
             "tags",
             "description",
             "short_description",
