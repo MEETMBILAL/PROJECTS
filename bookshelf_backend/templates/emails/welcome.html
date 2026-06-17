@@ -1,0 +1,17 @@
+{% extends "emails/base_email.html" %}
+{% block subject %}Welcome to Bookshelf.pk{% endblock %}
+{% block content %}
+  <h1 style="font-size:24px;margin:0 0 16px;color:#2C4A3E;">Welcome, {{ user.display_name }}!</h1>
+  <p style="font-size:15px;line-height:1.6;color:#1C1C1A;">
+    Thank you for joining Bookshelf.pk — Pakistan's most trusted online bookstore and
+    Print-on-Demand platform. Explore thousands of titles across Non-Fiction, Business,
+    Self-Help, Fiction and Academic categories.
+  </p>
+  <p style="margin:24px 0;">
+    <a href="{{ frontend_url }}/books"
+       style="background:#2C4A3E;color:#FAFAF8;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:15px;display:inline-block;">
+      Start Browsing
+    </a>
+  </p>
+  <p style="font-size:13px;color:#6B6560;">Happy reading,<br />The Bookshelf.pk Team</p>
+{% endblock %}

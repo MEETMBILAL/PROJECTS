@@ -1,0 +1,15 @@
+{% extends "emails/base_email.html" %}
+{% block subject %}Print order received{% endblock %}
+{% block content %}
+  <h1 style="font-size:24px;margin:0 0 16px;color:#2C4A3E;">We received your print order</h1>
+  <p style="font-size:15px;line-height:1.6;">
+    Hi {{ pod_order.user.display_name }}, we've received your Print-on-Demand order
+    <strong>"{{ pod_order.title }}"</strong>.
+  </p>
+  <table role="presentation" width="100%" style="font-size:14px;margin:16px 0;">
+    <tr><td style="padding:4px;color:#6B6560;">Pages:</td><td style="padding:4px;">{{ pod_order.page_count }}</td></tr>
+    <tr><td style="padding:4px;color:#6B6560;">Copies:</td><td style="padding:4px;">{{ pod_order.copies }}</td></tr>
+    <tr><td style="padding:4px;color:#6B6560;">Total:</td><td style="padding:4px;font-weight:bold;color:#2C4A3E;">PKR {{ pod_order.total_price }}</td></tr>
+  </table>
+  <p style="font-size:13px;color:#6B6560;">Our team will review your file and begin printing shortly.</p>
+{% endblock %}
