@@ -1,0 +1,5 @@
+-r base.txt
+factory-boy==3.3.0
+black==24.4.2
+ruff==0.4.8
+ipython==8.25.0

@@ -1,0 +1,7 @@
+Print-on-Demand Order Received
+
+We've received your print order {{ order.pod_number }} for "{{ order.title }}".
+Pages: {{ order.page_count }} | Copies: {{ order.copies }} | Total: PKR {{ order.total_price }}
+
+Our team will review your file and begin printing shortly.
+The Bookshelf Team

@@ -1,0 +1,11 @@
+Order Confirmed — {{ order.order_number }}
+
+{% for item in items %}- {{ item.title_snapshot }} x {{ item.quantity }} = PKR {{ item.total_price }}
+{% endfor %}
+Subtotal: PKR {{ order.subtotal }}
+Shipping: PKR {{ order.shipping_fee }}
+Discount: PKR {{ order.discount }}
+Total: PKR {{ order.total }}
+
+We'll let you know when your order ships.
+The Bookshelf Team

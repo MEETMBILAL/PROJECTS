@@ -1,0 +1,6 @@
+Your order is on its way!
+
+Order {{ order.order_number }} has shipped.
+{% if order.tracking_number %}Tracking number: {{ order.tracking_number }}{% endif %}
+
+Thanks for shopping with Bookshelf.pk.

@@ -1,0 +1,8 @@
+Welcome, {{ name }}!
+
+Thank you for joining Bookshelf.pk — Pakistan's most trusted online bookstore.
+Explore Non-Fiction, Business, Self-Help, Fiction and Academic titles, plus our
+Print-on-Demand service.
+
+Happy reading!
+The Bookshelf Team
