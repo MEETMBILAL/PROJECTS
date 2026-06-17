@@ -1,0 +1,77 @@
+version: "3.9"
+
+# Bookshelf.pk full-stack stack (Django backend + Next.js frontend).
+# Usage: docker compose up --build
+
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: bookshelf_db
+      POSTGRES_USER: bookshelf_user
+      POSTGRES_PASSWORD: bookshelf_pass
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./bookshelf_backend
+      dockerfile: docker/Dockerfile.backend
+    restart: unless-stopped
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    volumes:
+      - ./bookshelf_backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      DATABASE_URL: postgresql://bookshelf_user:bookshelf_pass@db:5432/bookshelf_db
+      REDIS_URL: redis://redis:6379/0
+    env_file:
+      - ./bookshelf_backend/.env
+
+  celery:
+    build:
+      context: ./bookshelf_backend
+      dockerfile: docker/Dockerfile.backend
+    restart: unless-stopped
+    command: celery -A config worker -l info
+    volumes:
+      - ./bookshelf_backend:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      DATABASE_URL: postgresql://bookshelf_user:bookshelf_pass@db:5432/bookshelf_db
+      REDIS_URL: redis://redis:6379/0
+    env_file:
+      - ./bookshelf_backend/.env
+
+  frontend:
+    build:
+      context: ./bookshelf_frontend
+      dockerfile: docker/Dockerfile.frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api/v1
+      NEXTAUTH_URL: http://localhost:3000
+
+volumes:
+  postgres_data:
