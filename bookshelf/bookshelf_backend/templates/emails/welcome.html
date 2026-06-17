@@ -1,0 +1,13 @@
+{% extends "emails/base_email.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<h2 style="margin:0 0 12px;color:#2C4A3E;font-size:20px;">Welcome to Bookshelf.pk, {{ user.get_full_name }}!</h2>
+<p style="margin:0 0 16px;font-size:15px;line-height:1.5;">
+  We're thrilled to have you. Discover thousands of Non-Fiction, Business,
+  Self-Help, Fiction, and Academic titles — plus our Print-on-Demand service.
+</p>
+<p style="margin:0 0 24px;">
+  <a href="#" style="background:#2C4A3E;color:#FAFAF8;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;display:inline-block;">Start Browsing</a>
+</p>
+<p style="margin:0;font-size:14px;color:#6B6560;">Happy reading!</p>
+{% endblock %}

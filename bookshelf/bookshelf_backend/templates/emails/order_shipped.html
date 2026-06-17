@@ -1,0 +1,15 @@
+{% extends "emails/base_email.html" %}
+{% block title %}Order Shipped{% endblock %}
+{% block content %}
+<h2 style="margin:0 0 12px;color:#2C4A3E;font-size:20px;">Your order is on the way!</h2>
+<p style="margin:0 0 16px;font-size:15px;line-height:1.5;">
+  Good news — order <strong>{{ order.order_number }}</strong> has shipped.
+</p>
+{% if tracking_number %}
+<p style="margin:0 0 16px;font-size:15px;">
+  Tracking number:
+  <strong style="font-family:monospace;color:#2C4A3E;">{{ tracking_number }}</strong>
+</p>
+{% endif %}
+<p style="margin:20px 0 0;font-size:14px;color:#6B6560;">Thank you for shopping with Bookshelf.pk.</p>
+{% endblock %}
