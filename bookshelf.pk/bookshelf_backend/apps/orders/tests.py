@@ -64,3 +64,14 @@ class OrderFlowTests(APITestCase):
     def test_order_list_endpoint(self):
         response = self.client.get(reverse("v1:order-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_order_empty_cart_returns_clean_error(self):
+        response = self.client.post(
+            reverse("v1:order-create-order"),
+            {"shipping_address": {"city": "Lahore"}, "payment_method": "cod"},
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        body = response.json()
+        self.assertFalse(body["success"])
+        self.assertEqual(body["message"], "Your cart is empty.")

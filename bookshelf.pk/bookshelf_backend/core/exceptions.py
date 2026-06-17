@@ -1,8 +1,6 @@
 """Custom DRF exception handling."""
 from __future__ import annotations
 
-from django.core.exceptions import PermissionDenied
-from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
@@ -14,10 +12,16 @@ def bookshelf_exception_handler(exc, context) -> Response | None:
     Falls back to DRF's default handler and re-shapes the payload so the
     front-end always receives ``{success, data, message, errors}``.
     """
-    if isinstance(exc, Http404):
-        exc = exc  # handled by DRF default below
-    if isinstance(exc, PermissionDenied):
-        exc = exc
+    if isinstance(exc, ServiceError):
+        return Response(
+            {
+                "success": False,
+                "data": None,
+                "message": exc.message,
+                "errors": {"detail": exc.message},
+            },
+            status=exc.status_code,
+        )
 
     response = exception_handler(exc, context)
 
