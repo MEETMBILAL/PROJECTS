@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <rect width="400" height="600" fill="#F3F1EC"/>
+  <rect x="40" y="40" width="320" height="520" rx="12" fill="#E2DDD5"/>
+  <rect x="80" y="220" width="240" height="16" rx="8" fill="#9B9690"/>
+  <rect x="110" y="260" width="180" height="12" rx="6" fill="#C4933F"/>
+  <text x="200" y="340" font-family="Georgia, serif" font-size="28" fill="#2C4A3E" text-anchor="middle">Bookshelf.pk</text>
+</svg>

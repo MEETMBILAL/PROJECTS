@@ -1,0 +1,21 @@
+export const queryKeys = {
+  books: (params?: Record<string, unknown>) =>
+    ["books", params ?? {}] as const,
+  book: (slug: string) => ["book", slug] as const,
+  relatedBooks: (slug: string) => ["book", slug, "related"] as const,
+  featured: ["books", "featured"] as const,
+  bestsellers: ["books", "bestsellers"] as const,
+  newArrivals: ["books", "new-arrivals"] as const,
+  categories: ["categories"] as const,
+  category: (slug: string) => ["category", slug] as const,
+  authors: ["authors"] as const,
+  author: (slug: string) => ["author", slug] as const,
+  search: (q: string) => ["search", q] as const,
+  cart: ["cart"] as const,
+  wishlist: ["wishlist"] as const,
+  orders: ["orders"] as const,
+  order: (id: string) => ["order", id] as const,
+  reviews: (slug: string) => ["reviews", slug] as const,
+  podSpecs: ["pod", "specs"] as const,
+  podOrders: ["pod", "orders"] as const,
+} as const;
