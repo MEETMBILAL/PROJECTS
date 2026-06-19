@@ -1,3 +1,105 @@
+# Asura Scans Clone
+
+A dark, responsive manga/manhwa reader platform inspired by Asura Scans. Built with Next.js 14 App Router, TypeScript, Tailwind CSS, shadcn-style components, Prisma/PostgreSQL, NextAuth, Zustand, Upstash Redis, Algolia, and Cloudinary/uploadthing-ready configuration.
+
+## Project structure
+
+```txt
+app/
+  api/                    Route handlers for comics, chapters, auth, search, ratings, views
+  browse/                 Filterable comic browser
+  bookmarks/              Auth-gated bookmark library
+  comics/[slug]/          Comic detail page
+  comics/[slug]/chapter/  Minimal reader UI
+  leaderboard/            Weekly/monthly/all-time rankings
+  search/                 Debounced instant search page
+components/
+  ui/                     shadcn-style primitives
+  *.tsx                   Feature components (cards, hero, reader, filters, nav)
+lib/
+  auth.ts                 NextAuth configuration
+  cache.ts                Upstash Redis helpers
+  mock-data.ts            Typed 50-comic catalogue used by local pages/API
+  prisma.ts               Prisma singleton
+  search.ts               Algolia search with local fallback
+prisma/
+  schema.prisma           PostgreSQL schema
+  seed.ts                 50-comic seed script
+store/
+  use-reader-store.ts     Zustand reader settings
+```
+
+## Setup
+
+```bash
+npm install --legacy-peer-deps
+cp .env.example .env.local
+npm run db:generate
+npm run dev
+```
+
+Open http://localhost:3000.
+
+## Database
+
+1. Create a PostgreSQL database on Supabase or Neon.
+2. Set `DATABASE_URL` in `.env.local`.
+3. Push the schema and seed sample data:
+
+```bash
+npm run db:push
+npm run db:seed
+```
+
+Sample users:
+
+- `reader@asuraclone.dev`
+- `scanlator@asuraclone.dev`
+- `admin@asuraclone.dev`
+
+Password for all seed users: `asura1234`
+
+## Auth
+
+NextAuth is configured with:
+
+- Email/password credentials
+- Google OAuth
+- Prisma adapter models
+
+Set `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, `GOOGLE_CLIENT_ID`, and `GOOGLE_CLIENT_SECRET` before testing OAuth.
+
+## Search, cache, and media
+
+- Search uses Algolia if `ALGOLIA_*` variables are present; otherwise it falls back to the local catalogue.
+- Hot routes use Upstash Redis if `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are configured.
+- `.env.example` includes Cloudinary and uploadthing variables for production image storage.
+
+## Scripts
+
+```bash
+npm run dev          # Start Next dev server
+npm run build        # Prisma generate + production build
+npm run start        # Start production server
+npm run lint         # Next lint
+npm run db:generate  # Generate Prisma client
+npm run db:push      # Push Prisma schema
+npm run db:seed      # Seed sample comics/users
+```
+
+## Design system
+
+The exact requested color system is defined under `theme.extend.colors.brand` in `tailwind.config.ts`:
+
+- Primary purple `#913FE2`
+- Dark background `#0F0F0F`
+- Card `#1A1A1A`
+- Card hover `#222222`
+- Surface/border `#2A2A2A`
+- Nav `#111111`
+- Text, rating, and badge colors
+
+The app is dark-only, uses Inter via `next/font`, 3:4 covers, thin dark scrollbars, 150ms transitions, and purple focus glow.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
