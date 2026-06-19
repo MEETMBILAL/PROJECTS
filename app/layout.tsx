@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   title: 'Asura Scans - Read Manga, Manhwa & Manhua Online',
   description: 'A pixel-focused manga/manhwa reader clone with trending comics, bookmarks, search, and a dark reading experience.',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'),
-  themeColor: '#913FE2',
   openGraph: {
     title: 'Asura Scans Clone',
     description: 'Read manga, manhwa, and manhua online in a polished dark interface.',

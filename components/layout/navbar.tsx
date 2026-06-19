@@ -1,4 +1,4 @@
-use client';
+'use client';
 
 import { BookOpen, ChevronDown, Menu, Trophy, Users, X } from 'lucide-react';
 import Image from 'next/image';

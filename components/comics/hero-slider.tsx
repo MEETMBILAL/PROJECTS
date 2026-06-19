@@ -1,4 +1,4 @@
-use client';
+'use client';
 
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import Image from 'next/image';

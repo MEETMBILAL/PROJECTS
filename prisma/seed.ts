@@ -1,9 +1,14 @@
 import { PrismaClient, ComicStatus, ComicType } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 import bcrypt from 'bcryptjs';
 import { GENRES, MOCK_COMICS } from '@/lib/mock-data';
 import { slugify } from '@/lib/utils';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({
+  connectionString:
+    process.env.DATABASE_URL ?? 'postgresql://user:password@localhost:5432/asura_clone?schema=public',
+});
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   await prisma.comment.deleteMany();

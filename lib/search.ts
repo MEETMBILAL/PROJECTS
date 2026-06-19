@@ -1,5 +1,5 @@
 import { algoliasearch } from 'algoliasearch';
-import { MeiliSearch } from 'meilisearch';
+import { Meilisearch } from 'meilisearch';
 import { MOCK_COMICS } from '@/lib/mock-data';
 import type { ComicDTO } from '@/lib/types';
 
@@ -9,7 +9,7 @@ export async function searchComicsIndex(query: string): Promise<ComicDTO[]> {
 
   if (process.env.MEILISEARCH_HOST) {
     try {
-      const client = new MeiliSearch({
+      const client = new Meilisearch({
         host: process.env.MEILISEARCH_HOST,
         apiKey: process.env.MEILISEARCH_API_KEY,
       });

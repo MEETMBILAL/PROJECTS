@@ -1,4 +1,4 @@
-use client';
+'use client';
 
 import { Bookmark, BookmarkCheck } from 'lucide-react';
 import { useState, useTransition } from 'react';

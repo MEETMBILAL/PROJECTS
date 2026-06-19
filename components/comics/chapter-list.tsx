@@ -1,4 +1,4 @@
-use client';
+'use client';
 
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ArrowDownUp, Search } from 'lucide-react';
