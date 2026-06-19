@@ -78,7 +78,7 @@ export function SearchOverlay({ open, onOpenChange }: SearchOverlayProps) {
           <div className="mt-4 max-h-[60vh] overflow-y-auto">
             {loading && <p className="px-2 py-8 text-center text-sm text-brand-textSecondary">Searching...</p>}
             {!loading && query.trim() && results.length === 0 && (
-              <p className="px-2 py-8 text-center text-sm text-brand-textSecondary">No comics found for "{query}".</p>
+              <p className="px-2 py-8 text-center text-sm text-brand-textSecondary">No comics found for &quot;{query}&quot;.</p>
             )}
             <div className="space-y-2">
               {results.map((comic) => (

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import { AppChrome } from "@/components/app-chrome";
@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     template: "%s | Asura Scans Clone",
   },
   description: "A pixel-focused manga and manhwa reader platform built with Next.js, Prisma, Tailwind, and NextAuth.",
+};
+
+export const viewport: Viewport = {
   themeColor: "#913FE2",
 };
 

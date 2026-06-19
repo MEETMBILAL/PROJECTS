@@ -14,11 +14,14 @@ export async function searchComics(query: string) {
   if (appId && apiKey) {
     try {
       const client = algoliasearch(appId, apiKey);
-      const response = await client.searchSingleIndex({
-        indexName,
-        searchParams: { query, hitsPerPage: 12 },
-      });
-      return response.hits;
+      const response = await client.search([
+        {
+          indexName,
+          params: { query, hitsPerPage: 12 },
+        },
+      ]);
+      const firstResult = response.results[0] as { hits?: unknown[] } | undefined;
+      return firstResult?.hits ?? [];
     } catch {
       // The local catalogue fallback keeps search usable during setup.
     }

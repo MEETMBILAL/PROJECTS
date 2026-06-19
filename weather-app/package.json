@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
-    "@prisma/client": "latest",
+    "@prisma/client": "^6.19.3",
     "@radix-ui/react-avatar": "latest",
     "@radix-ui/react-dialog": "latest",
     "@radix-ui/react-dropdown-menu": "latest",
@@ -50,9 +50,9 @@
     "eslint": "latest",
     "eslint-config-next": "14",
     "postcss": "latest",
-    "prisma": "latest",
+    "prisma": "^6.19.3",
     "tailwindcss": "latest",
     "tsx": "latest",
-    "typescript": "^6.0.3"
+    "typescript": "^5.9.3"
   }
 }

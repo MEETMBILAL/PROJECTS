@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Facebook, Share2, Twitter } from "lucide-react";
+import { Eye, Link2, Send, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import { BookmarkButton } from "@/components/bookmark-button";
@@ -75,10 +75,10 @@ export default function ComicDetailPage({ params }: { params: { slug: string } }
               <Share2 className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="icon" aria-label="Share on Twitter">
-              <Twitter className="h-4 w-4" />
+              <Send className="h-4 w-4" />
             </Button>
             <Button variant="ghost" size="icon" aria-label="Share on Facebook">
-              <Facebook className="h-4 w-4" />
+              <Link2 className="h-4 w-4" />
             </Button>
           </div>
 
