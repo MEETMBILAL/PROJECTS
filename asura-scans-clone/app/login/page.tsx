@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
-import { Chrome } from "lucide-react";
+import { Globe } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,7 +35,7 @@ export default function LoginPage() {
             <Button className="bg-brand-primary hover:bg-brand-light">Login</Button>
           </form>
           <Button variant="outline" onClick={() => signIn("google", { callbackUrl: "/bookmarks" })} className="mt-4 w-full border-brand-surface text-white hover:bg-brand-hover">
-            <Chrome className="mr-2 h-4 w-4" /> Continue with Google
+            <Globe className="mr-2 h-4 w-4" /> Continue with Google
           </Button>
           <p className="mt-4 text-xs text-brand-muted">Seed users use password: password123</p>
         </CardContent>

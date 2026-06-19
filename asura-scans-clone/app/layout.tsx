@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     template: "%s | Asura Scans Clone",
   },
   description: "A dark manga and manhwa reading platform inspired by Asura Scans.",
-  themeColor: "#913FE2",
 };
 
 export const viewport: Viewport = {

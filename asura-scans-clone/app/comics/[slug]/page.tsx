@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Facebook, Play, Share2, Twitter } from "lucide-react";
+import { Eye, MessageCircle, Play, Send, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import { BookmarkButton } from "@/components/comics/bookmark-button";
@@ -58,8 +58,8 @@ export default function ComicDetailPage({ params }: { params: { slug: string } }
               <BookmarkButton comicId={comic.id} />
               <Button asChild className="bg-brand-primary hover:bg-brand-light"><Link href={`/comics/${comic.slug}/chapter/${firstChapter?.number ?? 1}`}><Play className="mr-2 h-4 w-4 fill-white" /> Start Reading</Link></Button>
               <Button variant="ghost" size="icon" aria-label="Share"><Share2 className="h-5 w-5" /></Button>
-              <Button variant="ghost" size="icon" aria-label="Share on Facebook"><Facebook className="h-5 w-5" /></Button>
-              <Button variant="ghost" size="icon" aria-label="Share on Twitter"><Twitter className="h-5 w-5" /></Button>
+              <Button variant="ghost" size="icon" aria-label="Share in community chat"><MessageCircle className="h-5 w-5" /></Button>
+              <Button variant="ghost" size="icon" aria-label="Send share link"><Send className="h-5 w-5" /></Button>
             </div>
           </div>
         </div>

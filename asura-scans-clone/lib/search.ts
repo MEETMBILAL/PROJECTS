@@ -1,9 +1,9 @@
-import { MeiliSearch } from "meilisearch";
+import { Meilisearch } from "meilisearch";
 
 import { searchComics } from "@/lib/mock-data";
 
 const client = process.env.MEILISEARCH_HOST
-  ? new MeiliSearch({
+  ? new Meilisearch({
       host: process.env.MEILISEARCH_HOST,
       apiKey: process.env.MEILISEARCH_API_KEY,
     })
