@@ -1,0 +1,81 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #2A2A2A #0F0F0F;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #0F0F0F;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #2A2A2A;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+  }
+}
+
+@layer base {
+  .theme {
+    --font-heading: var(--font-inter);
+    --font-sans: var(--font-inter);
+  }
+
+  :root {
+    --background: #0F0F0F;
+    --foreground: #FFFFFF;
+    --card: #1A1A1A;
+    --card-foreground: #FFFFFF;
+    --popover: #1A1A1A;
+    --popover-foreground: #FFFFFF;
+    --primary: #913FE2;
+    --primary-foreground: #FFFFFF;
+    --secondary: #222222;
+    --secondary-foreground: #FFFFFF;
+    --muted: #2A2A2A;
+    --muted-foreground: #A0A0A0;
+    --accent: #222222;
+    --accent-foreground: #FFFFFF;
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+    --border: #2A2A2A;
+    --input: #2A2A2A;
+    --ring: #913FE2;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-brand-dark text-brand-text-primary antialiased;
+  }
+
+  html {
+    @apply font-sans scroll-smooth;
+  }
+
+  :focus-visible {
+    box-shadow: 0 0 0 2px #913FE2;
+    outline: none;
+  }
+}
