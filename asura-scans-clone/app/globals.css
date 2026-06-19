@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 5.9%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 10.2%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 6.7%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 270 73% 57%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 13.3%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 16.5%;
+    --muted-foreground: 0 0% 62.7%;
+    --accent: 270 86% 70%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 16.5%;
+    --input: 0 0% 16.5%;
+    --ring: 270 73% 57%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-background text-brand-text antialiased;
+  }
+
+  ::selection {
+    background: #913fe2;
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #913fe2;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0f0f0f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #913fe2;
+  }
+}
+
+@layer components {
+  .section-heading {
+    @apply border-l-[3px] border-brand-primary pl-3 text-2xl font-bold tracking-tight text-white;
+  }
+
+  .container-shell {
+    @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .interactive-card {
+    @apply border border-brand-surface bg-brand-card transition-all duration-150 ease-site hover:-translate-y-1 hover:border-brand-primary/70 hover:bg-brand-cardHover hover:shadow-purple-glow;
+  }
+}
