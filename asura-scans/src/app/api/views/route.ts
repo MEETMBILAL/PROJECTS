@@ -1,0 +1,40 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
+export async function POST(request: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+    const { comicId, chapterId } = await request.json();
+
+    if (!comicId) {
+      return NextResponse.json({ error: "comicId required" }, { status: 400 });
+    }
+
+    await prisma.view.create({
+      data: {
+        comicId,
+        chapterId: chapterId ?? null,
+        userId: session?.user?.id ?? null,
+      },
+    });
+
+    if (chapterId) {
+      await prisma.chapter.update({
+        where: { id: chapterId },
+        data: { views: { increment: 1 } },
+      });
+    }
+
+    await prisma.comic.update({
+      where: { id: comicId },
+      data: { totalViews: { increment: 1 } },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("POST /api/views error:", error);
+    return NextResponse.json({ error: "Failed to record view" }, { status: 500 });
+  }
+}
