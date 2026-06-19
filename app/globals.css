@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 5.9%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 10.2%;
+    --card-foreground: 0 0% 100%;
+    --primary: 269 73% 57%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 16.5%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 16.5%;
+    --muted-foreground: 0 0% 62.7%;
+    --accent: 269 85% 70%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 16.5%;
+    --input: 0 0% 16.5%;
+    --ring: 269 73% 57%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-dark text-brand-text antialiased;
+  }
+
+  ::selection {
+    background: #913FE2;
+    color: white;
+  }
+}
+
+@layer components {
+  .section-heading {
+    @apply border-l-[3px] border-brand-primary pl-3 text-xl font-bold tracking-tight text-white md:text-2xl;
+  }
+
+  .focus-purple {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F0F0F;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #913FE2;
+}
